@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Online Games</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+html, body {
+    margin: 0;
+    min-height: 100%;
+}
+
+body {
+    background:
+        radial-gradient(circle at 50% 10%, rgba(0,255,40,.10), transparent 30%),
+        linear-gradient(180deg, #001b08 0%, #002b10 45%, #001d0a 100%);
+    font-family: Arial, sans-serif;
+    color: white;
+}
+
+/* TOP */
+.top-area {
+    padding: 18px 18px 8px;
+}
+
+.top-buttons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.menu-btn,
+.owner-btn {
+    border: 1px solid #39ff14;
+    background: rgba(0, 55, 15, .55);
+    color: #65ff38;
+    box-shadow: 0 0 12px rgba(57,255,20,.35);
+}
+
+.menu-btn {
+    width: 72px;
+    height: 64px;
+    border-radius: 17px;
+    font-size: 32px;
+}
+
+.owner-btn {
+    padding: 14px 17px;
+    border-radius: 16px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+/* SEARCH */
+.search-box {
+    margin: 25px auto 18px;
+    max-width: 900px;
+    height: 72px;
+    border: 1px solid #39ff14;
+    border-radius: 20px;
+    background: rgba(0, 45, 10, .65);
+    box-shadow: 0 0 12px rgba(57,255,20,.25);
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+}
+
+.search-icon {
+    font-size: 38px;
+    color: #ddd;
+    margin-right: 15px;
+}
+
+#search {
+    width: 100%;
+    border: none;
+    outline: none;
+    background: transparent;
+    color: white;
+    font-size: 22px;
+}
+
+#search::placeholder {
+    color: #aaa;
+}
+
+/* TABS */
+.tabs {
+    max-width: 900px;
+    margin: 0 auto 18px;
+    padding: 6px;
+    border: 1px solid #39ff14;
+    border-radius: 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.tab {
+    border: none;
+    border-radius: 14px;
+    padding: 14px 5px;
+    background: transparent;
+    color: #999;
+    font-size: 17px;
+    font-weight: bold;
+}
+
+.tab.active {
+    color: white;
+    background: linear-gradient(180deg, #49ff18, #17bd00);
+    box-shadow: 0 0 16px rgba(57,255,20,.55);
+}
+
+/* GAME LIST */
+.games {
+    max-width: 900px;
+    margin: auto;
+    padding: 0 8px 30px;
+}
+
+.game-card {
+    min-height: 155px;
+    margin-bottom: 15px;
+    padding: 14px;
+
+    border: 1px solid #28e916;
+    border-radius: 20px;
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(0,45,12,.96),
+            rgba(0,70,18,.65)
+        );
+
+    box-shadow:
+        0 0 10px rgba(57,255,20,.20),
+        inset 0 0 18px rgba(0,255,40,.04);
+
+    display: grid;
+    grid-template-columns: 145px 1fr 250px;
+    gap: 15px;
+    align-items: center;
+}
+
+/* LOGO */
+.logo {
+    width: 130px;
+    height: 130px;
+
+    border: 1px solid rgba(100,255,80,.8);
+    border-radius: 18px;
+
+    background: #063b16;
+
+    overflow: hidden;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 45px;
+}
+
+.logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* DETAILS */
+.game-name {
+    font-size: 26px;
+    font-weight: bold;
+    margin-bottom: 12px;
+}
+
+.signup-bonus,
+.minimum-withdrawal {
+    font-size: 18px;
+    margin-top: 7px;
+    color: #ffffff;
+}
+
+/* RIGHT SIDE */
+.right-side {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+}
+
+/* RATING + SIZE */
+.basic-info {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    font-size: 18px;
+}
+
+.star {
+    color: #ffd900;
+    font-size: 23px;
+}
+
+.separator {
+    color: #aaa;
+}
+
+/* DOWNLOAD */
+.download {
+    min-height: 58px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+
+    border-radius: 14px;
+
+    text-decoration: none;
+
+    background:
+        linear-gradient(
+            180deg,
+            #48ff18,
+            #18bd00
+        );
+
+    color: white;
+
+    font-size: 20px;
+    font-weight: bold;
+
+    box-shadow:
+        0 0 14px rgba(57,255,20,.45);
+}
+
+.download:active {
+    transform: scale(.98);
+}
+
+/* MESSAGE */
+.message {
+    text-align: center;
+    padding: 35px 10px;
+    color: #aaa;
+    font-size: 18px;
+}
+
+/* MOBILE */
+@media (max-width: 700px) {
+
+    .top-area {
+        padding: 16px 12px 5px;
+    }
+
+    .menu-btn {
+        width: 62px;
+        height: 58px;
+        font-size: 29px;
+    }
+
+    .owner-btn {
+        padding: 13px 12px;
+        font-size: 14px;
+    }
+
+    .search-box {
+        height: 62px;
+        margin-top: 20px;
+    }
+
+    .search-icon {
+        font-size: 32px;
+    }
+
+    #search {
+        font-size: 18px;
+    }
+
+    .tab {
+        font-size: 14px;
+        padding: 13px 3px;
+    }
+
+    .game-card {
+        min-height: 140px;
+
+        grid-template-columns: 82px 1fr;
+        gap: 12px;
+
+        padding: 12px;
+    }
+
+    .logo {
+        width: 82px;
+        height: 82px;
+        border-radius: 14px;
+        font-size: 30px;
+    }
+
+    .game-name {
+        font-size: 20px;
+        margin-bottom: 8px;
+    }
+
+    .signup-bonus,
+    .minimum-withdrawal {
+        font-size: 14px;
+        margin-top: 5px;
+    }
+
+    .right-side {
+        grid-column: 2;
+        gap: 8px;
+    }
+
+    .right-side .basic-info {
+        font-size: 14px;
+    }
+
+    .star {
+        font-size: 18px;
+    }
+
+    .download {
+        min-height: 45px;
+        font-size: 16px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="top-area">
+
+    <div class="top-buttons">
+
+        <button class="menu-btn" type="button">
+            ☰
+        </button>
+
+        <button class="owner-btn" type="button">
+            👑 Owner / Credit
+        </button>
+
+    </div>
+
+    <div class="search-box">
+
+        <span class="search-icon">⌕</span>
+
+        <input
+            id="search"
+            type="search"
+            placeholder="Search games..."
+            autocomplete="off"
+        >
+
+    </div>
+
+    <div class="tabs">
+
+        <button
+            class="tab active"
+            id="yonoTab"
+            type="button"
+        >
+            🎮 YONO GAMES
+        </button>
+
+        <button
+            class="tab"
+            id="otherTab"
+            type="button"
+        >
+            🎮 OTHERS GAMES
+        </button>
+
+    </div>
+
+</div>
+
+<div class="games">
+
+    <div id="game-list">
+
+        <div class="message">
+            Loading games...
+        </div>
+
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="script.js"></script>
+
+</body>
+  </html>
