@@ -2,8 +2,15 @@ console.log("script.js started");
 
 const gameList = document.getElementById("game-list");
 
+
+/* =================================
+   MESSAGE
+================================= */
+
 function showMessage(message) {
+
     if (gameList) {
+
         gameList.innerHTML = `
             <div class="message">
                 ${message}
@@ -14,7 +21,7 @@ function showMessage(message) {
 
 
 /* =================================
-   CHECK SUPABASE LIBRARY
+   CHECK SUPABASE
 ================================= */
 
 if (!window.supabase) {
@@ -22,7 +29,7 @@ if (!window.supabase) {
     console.error("Supabase library load nahi hui.");
 
     showMessage(
-        "Supabase load nahi hui. Internet check karo aur page refresh karo."
+        "Supabase load nahi hui. Internet check karo."
     );
 
 } else {
@@ -31,7 +38,7 @@ if (!window.supabase) {
 
 
     /* =================================
-       SUPABASE SETTINGS
+       SUPABASE
     ================================= */
 
     const SUPABASE_URL =
@@ -56,31 +63,28 @@ if (!window.supabase) {
 
 
     /* =================================
-       LOAD GAMES FROM SUPABASE
+       LOAD GAMES
     ================================= */
 
     async function loadGames() {
 
         showMessage("Loading games...");
 
-        console.log("Loading games from Supabase...");
+        console.log("Loading games...");
 
 
         try {
 
-            const result =
-                await supabaseClient
-                    .from("games")
-                    .select("*")
-                    .eq("is_visible", true)
-                    .order("id", {
-                        ascending: true
-                    });
-
-
-            const data = result.data;
-
-            const error = result.error;
+            const {
+                data,
+                error
+            } = await supabaseClient
+                .from("games")
+                .select("*")
+                .eq("is_visible", true)
+                .order("id", {
+                    ascending: true
+                });
 
 
             console.log("Supabase data:", data);
@@ -88,14 +92,10 @@ if (!window.supabase) {
             console.log("Supabase error:", error);
 
 
-            /* =============================
-               SUPABASE ERROR
-            ============================= */
-
             if (error) {
 
                 console.error(
-                    "Supabase Error:",
+                    "Supabase error:",
                     error
                 );
 
@@ -108,47 +108,23 @@ if (!window.supabase) {
             }
 
 
-            /* =============================
-               NO DATA
-            ============================= */
-
-            if (!data) {
-
-                showMessage(
-                    "Games ka data nahi mila."
-                );
-
-                return;
-            }
-
-
-            /* =============================
-               SAVE DATA
-            ============================= */
-
-            allGames = data;
+            allGames = data || [];
 
 
             console.log(
-                "Total games:",
+                "Games loaded:",
                 allGames.length
             );
 
 
-            /* =============================
-               RENDER
-            ============================= */
-
             renderGames();
-
 
         } catch (error) {
 
             console.error(
-                "Connection Error:",
+                "Connection error:",
                 error
             );
-
 
             showMessage(
                 "Connection Error: " +
@@ -164,23 +140,14 @@ if (!window.supabase) {
 
     function renderGames() {
 
-        if (!gameList) {
-
-            console.error(
-                "game-list element nahi mila."
-            );
-
-            return;
-        }
+        if (!gameList) return;
 
 
         const filteredGames =
             allGames.filter(function(game) {
 
 
-                /* =========================
-                   CATEGORY
-                ========================= */
+                /* CATEGORY */
 
                 const category =
                     String(
@@ -205,9 +172,7 @@ if (!window.supabase) {
                 }
 
 
-                /* =========================
-                   SEARCH
-                ========================= */
+                /* SEARCH */
 
                 const name =
                     String(
@@ -230,9 +195,7 @@ if (!window.supabase) {
             });
 
 
-        /* =============================
-           NO GAME
-        ============================= */
+        /* NO GAME */
 
         if (filteredGames.length === 0) {
 
@@ -246,16 +209,10 @@ if (!window.supabase) {
         }
 
 
-        /* =============================
-           CLEAR OLD GAMES
-        ============================= */
-
         gameList.innerHTML = "";
 
 
-        /* =============================
-           CREATE GAME CARDS
-        ============================= */
+        /* CREATE CARDS */
 
         filteredGames.forEach(function(game) {
 
@@ -264,12 +221,13 @@ if (!window.supabase) {
                 document.createElement("div");
 
 
-            card.className = "game-card";
+            card.className =
+                "game-card";
 
 
-            /* =========================
-               GAME LOGO
-            ========================= */
+            /* =================================
+               LOGO
+            ================================= */
 
             let logoHTML = "🎮";
 
@@ -293,40 +251,50 @@ if (!window.supabase) {
             }
 
 
-            /* =========================
-               GAME LINK
-            ========================= */
+            /* =================================
+               GET LINK DIRECTLY FROM DATABASE
+            ================================= */
 
-            let link =
+            let gameLink =
                 String(
                     game.playstore_link || ""
                 ).trim();
 
 
+            console.log(
+                "Game:",
+                game.name,
+                "Link:",
+                gameLink
+            );
+
+
+            /* Add HTTPS if missing */
+
             if (
-                link &&
-                !link.startsWith("http://") &&
-                !link.startsWith("https://")
+                gameLink &&
+                !gameLink.startsWith("http://") &&
+                !gameLink.startsWith("https://")
             ) {
 
-                link =
-                    "https://" + link;
+                gameLink =
+                    "https://" + gameLink;
             }
 
 
-            /* =========================
+            /* =================================
                DOWNLOAD BUTTON
-            ========================= */
+            ================================= */
 
             let downloadButton;
 
 
-            if (link) {
+            if (gameLink) {
 
                 downloadButton = `
                     <a
                         class="download"
-                        href="${escapeHTML(link)}"
+                        href="${escapeHTML(gameLink)}"
                         target="_blank"
                         rel="noopener noreferrer"
                     >
@@ -354,9 +322,9 @@ if (!window.supabase) {
             }
 
 
-            /* =========================
-               GAME CARD HTML
-            ========================= */
+            /* =================================
+               CARD
+            ================================= */
 
             card.innerHTML = `
 
@@ -428,7 +396,6 @@ if (!window.supabase) {
                     </div>
 
                 </div>
-
             `;
 
 
@@ -454,26 +421,11 @@ if (!window.supabase) {
 
 
         return String(value)
-            .replace(
-                /&/g,
-                "&amp;"
-            )
-            .replace(
-                /</g,
-                "&lt;"
-            )
-            .replace(
-                />/g,
-                "&gt;"
-            )
-            .replace(
-                /"/g,
-                "&quot;"
-            )
-            .replace(
-                /'/g,
-                "&#039;"
-            );
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
     }
 
 
@@ -494,7 +446,6 @@ if (!window.supabase) {
                 searchText =
                     event.target.value.trim();
 
-
                 renderGames();
 
             }
@@ -503,7 +454,7 @@ if (!window.supabase) {
 
 
     /* =================================
-       YONO TAB
+       YONO
     ================================= */
 
     const yonoTab =
@@ -544,7 +495,7 @@ if (!window.supabase) {
 
 
     /* =================================
-       OTHERS TAB
+       OTHERS
     ================================= */
 
     if (otherTab) {
@@ -582,4 +533,4 @@ if (!window.supabase) {
 
     loadGames();
 
-    }
+                    }
