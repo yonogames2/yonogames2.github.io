@@ -1,387 +1,514 @@
 console.log("script.js started");
 
-// ===============================
-// SUPABASE SETTINGS
-// ===============================
+// ==========================================
+// SUPABASE
+// ==========================================
 
-const SUPABASE_URL = "https://srbvlfjthbkdixlwlcvz.supabase.co";
+const SUPABASE_URL =
+"https://srbvlfjthbkdixlwlcvz.supabase.co";
 
+// ⚠️ IMPORTANT:
 // YAHAN APNA SUPABASE PUBLISHABLE KEY PASTE KARO
-const SUPABASE_KEY = "sb_publishable_-pF6ErKu9TUaxnrXodt0cg_HP9uEY9m";
 
+const SUPABASE_KEY =
+"YOUR_SUPABASE_PUBLISHABLE_KEY";
 
-// ===============================
-// SUPABASE CONNECT
-// ===============================
+let supabaseClient = null;
+
+// ==========================================
+// CHECK SUPABASE
+// ==========================================
 
 if (!window.supabase) {
-    console.error("Supabase library load nahi hui.");
+
+console.error("Supabase library load nahi hui.");
+
+showMessage(
+    "Supabase library load nahi hui."
+);
+
 } else {
 
-    const supabaseClient =
-        window.supabase.createClient(
-            SUPABASE_URL,
-            SUPABASE_KEY
-        );
+supabaseClient =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+    );
+
+console.log("Supabase connected.");
+
+loadGames();
+
+}
+
+// ==========================================
+// ELEMENTS
+// ==========================================
+
+const gameList =
+document.getElementById("game-list");
+
+const searchInput =
+document.getElementById("search");
+
+const yonoTab =
+document.getElementById("yono-tab");
+
+const othersTab =
+document.getElementById("others-tab");
+
+let allGames = [];
+
+let currentCategory = "yono";
+
+// ==========================================
+// MESSAGE
+// ==========================================
+
+function showMessage(message) {
+
+if (!gameList) return;
+
+gameList.innerHTML = `
+    <div class="message">
+        ${message}
+    </div>
+`;
+
+}
+
+// ==========================================
+// LOAD GAMES FROM SUPABASE
+// ==========================================
+
+async function loadGames() {
+
+console.log("Loading games from Supabase...");
+
+showMessage("Loading games...");
 
 
-    // ===============================
-    // ELEMENTS
-    // ===============================
+try {
 
-    const gameList = document.getElementById("game-list");
-    const searchInput = document.getElementById("search");
-
-    const yonoTab = document.getElementById("yono-tab");
-    const othersTab = document.getElementById("others-tab");
-
-    let allGames = [];
-    let currentCategory = "yono";
-
-
-    // ===============================
-    // MESSAGE
-    // ===============================
-
-    function showMessage(message) {
-
-        if (gameList) {
-            gameList.innerHTML = `
-                <div class="message">
-                    ${message}
-                </div>
-            `;
-        }
-
-    }
-
-
-    // ===============================
-    // LOAD GAMES
-    // ===============================
-
-    async function loadGames() {
-
-        console.log("Loading games...");
-
-        showMessage("Loading games...");
-
-        try {
-
-            const { data, error } =
-                await supabaseClient
-                    .from("games")
-                    .select("*")
-                    .eq("is_visible", true)
-                    .order("id", { ascending: true });
-
-
-            if (error) {
-
-                console.error("Supabase Error:", error);
-
-                showMessage(
-                    "Games load nahi ho rahe.<br><br>" +
-                    "Error: " + error.message
-                );
-
-                return;
-            }
-
-
-            console.log("Games received:", data);
-
-            allGames = data || [];
-
-            renderGames();
-
-        } catch (err) {
-
-            console.error("Loading Error:", err);
-
-            showMessage(
-                "Games load karte waqt error aa gaya."
-            );
-
-        }
-
-    }
-
-
-    // ===============================
-    // RENDER GAMES
-    // ===============================
-
-    function renderGames() {
-
-        if (!gameList) return;
-
-
-        const searchText =
-            searchInput
-                ? searchInput.value.toLowerCase().trim()
-                : "";
-
-
-        const filteredGames =
-            allGames.filter(game => {
-
-                const category =
-                    String(game.category || "")
-                        .toLowerCase()
-                        .trim();
-
-
-                const name =
-                    String(game.name || "")
-                        .toLowerCase();
-
-
-                const categoryMatch =
-                    category === currentCategory;
-
-
-                const searchMatch =
-                    name.includes(searchText);
-
-
-                return categoryMatch && searchMatch;
-
+    const result =
+        await supabaseClient
+            .from("games")
+            .select(
+                "id, created_at, name, logo_url, signup_bonus, minimum_withdrawal, rating, size_mb, playstore_link, is_visible, category"
+            )
+            .eq("is_visible", true)
+            .order("id", {
+                ascending: true
             });
 
 
-        if (filteredGames.length === 0) {
-
-            showMessage(
-                searchText
-                    ? "Game nahi mila."
-                    : "Is category me koi game nahi hai."
-            );
-
-            return;
-        }
+    const data = result.data;
+    const error = result.error;
 
 
-        gameList.innerHTML =
-            filteredGames
-                .map(game => createGameCard(game))
-                .join("");
+    if (error) {
 
+        console.error(
+            "Supabase Error:",
+            error
+        );
+
+        showMessage(
+            "Games load nahi ho rahe.<br><br>" +
+            "Supabase Error:<br>" +
+            error.message
+        );
+
+        return;
     }
 
 
-    // ===============================
-    // GAME CARD
-    // ===============================
+    console.log(
+        "Games successfully loaded:",
+        data
+    );
 
-    function createGameCard(game) {
+
+    allGames = Array.isArray(data)
+        ? data
+        : [];
+
+
+    renderGames();
+
+
+} catch (error) {
+
+    console.error(
+        "Unexpected Error:",
+        error
+    );
+
+    showMessage(
+        "Games load nahi ho rahe.<br><br>" +
+        "Error: " +
+        error.message
+    );
+}
+
+}
+
+// ==========================================
+// RENDER GAMES
+// ==========================================
+
+function renderGames() {
+
+if (!gameList) return;
+
+
+const searchText =
+    searchInput
+        ? searchInput.value
+            .trim()
+            .toLowerCase()
+        : "";
+
+
+const filteredGames =
+    allGames.filter(function(game) {
+
+        const category =
+            String(
+                game.category || ""
+            )
+            .trim()
+            .toLowerCase();
+
 
         const name =
-            String(game.name || "Game");
+            String(
+                game.name || ""
+            )
+            .trim()
+            .toLowerCase();
 
 
-        const logo =
-            String(game.logo_url || "").trim();
+        const categoryMatch =
+            category === currentCategory;
 
 
-        const signupBonus =
-            String(game.signup_bonus || "");
+        const searchMatch =
+            name.includes(searchText);
 
 
-        const minimumWithdrawal =
-            String(game.minimum_withdrawal || "");
+        return (
+            categoryMatch &&
+            searchMatch
+        );
+    });
 
 
-        const rating =
-            String(game.rating || "0");
+console.log(
+    "Current category:",
+    currentCategory
+);
+
+console.log(
+    "Games to display:",
+    filteredGames
+);
 
 
-        const size =
-            String(game.size_mb || "");
+if (filteredGames.length === 0) {
+
+    showMessage(
+        searchText
+            ? "Game nahi mila."
+            : "Is category me koi game nahi hai."
+    );
+
+    return;
+}
 
 
-        // IMPORTANT:
-        // Database ke playstore_link column se
-        // DIRECT link liya ja raha hai.
+gameList.innerHTML =
+    filteredGames
+        .map(createGameCard)
+        .join("");
 
-        const gameLink =
-            String(game.playstore_link || "").trim();
+}
 
+// ==========================================
+// CREATE GAME CARD
+// ==========================================
 
-        const logoHTML =
-            logo
-                ? `<img src="${logo}" alt="${name}" class="game-logo">`
-                : `<div class="game-logo">🎮</div>`;
+function createGameCard(game) {
 
-
-        return `
-            <div class="game-card">
-
-                <div class="game-logo-box">
-                    ${logoHTML}
-                </div>
+const id =
+    game.id;
 
 
-                <div class="game-info">
-
-                    <div class="game-name">
-                        ${name}
-                    </div>
-
-                    <div class="signup-bonus">
-                        Sign Up Bonus: ${signupBonus}
-                    </div>
-
-                    <div class="minimum-withdrawal">
-                        Minimum Withdrawal: ${minimumWithdrawal}
-                    </div>
-
-                </div>
+const name =
+    escapeHTML(
+        game.name || "Game"
+    );
 
 
-                <div class="game-action">
-
-                    <button
-                        class="download-btn"
-                        onclick="openGameLink('${escapeJS(gameLink)}')"
-                    >
-                        ⇩<br>
-                        Download
-                    </button>
+const logoURL =
+    String(
+        game.logo_url || ""
+    ).trim();
 
 
-                    <div class="game-meta">
-                        ★ ${rating}
-                        <span>|</span>
-                        ${size}
-                    </div>
+const signupBonus =
+    escapeHTML(
+        game.signup_bonus || ""
+    );
 
-                </div>
 
+const minimumWithdrawal =
+    escapeHTML(
+        game.minimum_withdrawal || ""
+    );
+
+
+const rating =
+    escapeHTML(
+        game.rating ?? "0"
+    );
+
+
+const size =
+    escapeHTML(
+        game.size_mb || ""
+    );
+
+
+// ======================================
+// IMPORTANT:
+// Link database ke playstore_link
+// column se directly liya jayega.
+// ======================================
+
+const gameLink =
+    String(
+        game.playstore_link || ""
+    ).trim();
+
+
+let logoHTML;
+
+
+if (logoURL) {
+
+    logoHTML = `
+        <img
+            src="${escapeAttribute(logoURL)}"
+            alt="${name}"
+            class="game-logo"
+            onerror="this.style.display='none'; this.parentElement.innerHTML='🎮';"
+        >
+    `;
+
+} else {
+
+    logoHTML = "🎮";
+}
+
+
+return `
+    <div class="game-card">
+
+        <div class="game-logo-box">
+            ${logoHTML}
+        </div>
+
+
+        <div class="game-info">
+
+            <div class="game-name">
+                ${name}
             </div>
-        `;
+
+            <div class="signup-bonus">
+                Sign Up Bonus: ${signupBonus}
+            </div>
+
+            <div class="minimum-withdrawal">
+                Minimum Withdrawal:
+                ${minimumWithdrawal}
+            </div>
+
+        </div>
+
+
+        <div class="game-action">
+
+            <button
+                class="download-btn"
+                onclick="openGameLink(${JSON.stringify(gameLink)})"
+            >
+                ⇩<br>
+                Download
+            </button>
+
+
+            <div class="game-meta">
+                ★ ${rating}
+
+                <span>|</span>
+
+                ${size}
+            </div>
+
+        </div>
+
+    </div>
+`;
+
+}
+
+// ==========================================
+// OPEN GAME LINK
+// ==========================================
+
+window.openGameLink =
+function(link) {
+
+    let finalLink =
+        String(link || "").trim();
+
+
+    console.log(
+        "Game link:",
+        finalLink
+    );
+
+
+    if (!finalLink) {
+
+        alert(
+            "Is game ka download link available nahi hai."
+        );
+
+        return;
     }
 
 
-    // ===============================
-    // OPEN GAME LINK
-    // ===============================
+    // https:// missing ho to add karo
 
-    window.openGameLink = function(link) {
+    if (
+        !finalLink.startsWith("http://") &&
+        !finalLink.startsWith("https://")
+    ) {
 
-        link = String(link || "").trim();
+        finalLink =
+            "https://" + finalLink;
+    }
 
-        console.log("Opening game link:", link);
+
+    // EXACT DATABASE LINK OPEN
+
+    window.location.assign(
+        finalLink
+    );
+};
+
+// ==========================================
+// YONO TAB
+// ==========================================
+
+if (yonoTab) {
+
+yonoTab.addEventListener(
+    "click",
+    function() {
+
+        currentCategory =
+            "yono";
 
 
-        if (!link) {
+        yonoTab.classList.add(
+            "active"
+        );
 
-            alert("Is game ka download link available nahi hai.");
 
-            return;
+        if (othersTab) {
+
+            othersTab.classList.remove(
+                "active"
+            );
         }
 
 
-        // Agar https:// nahi hai to add karo
+        renderGames();
+    }
+);
 
-        if (
-            !link.startsWith("http://") &&
-            !link.startsWith("https://")
-        ) {
+}
 
-            link = "https://" + link;
+// ==========================================
+// OTHERS TAB
+// ==========================================
 
+if (othersTab) {
+
+othersTab.addEventListener(
+    "click",
+    function() {
+
+        currentCategory =
+            "others";
+
+
+        othersTab.classList.add(
+            "active"
+        );
+
+
+        if (yonoTab) {
+
+            yonoTab.classList.remove(
+                "active"
+            );
         }
 
 
-        // DIRECT LINK OPEN
+        renderGames();
+    }
+);
 
-        window.location.href = link;
+}
 
-    };
+// ==========================================
+// SEARCH
+// ==========================================
 
+if (searchInput) {
 
-    // ===============================
-    // ESCAPE LINK
-    // ===============================
+searchInput.addEventListener(
+    "input",
+    function() {
 
-    function escapeJS(text) {
+        renderGames();
+    }
+);
 
-        return String(text)
-            .replace(/\\/g, "\\\\")
-            .replace(/'/g, "\\'")
-            .replace(/"/g, '\\"')
-            .replace(/\n/g, "\\n")
-            .replace(/\r/g, "\\r");
+}
+
+// ==========================================
+// HTML SECURITY
+// ==========================================
+
+function escapeHTML(value) {
+
+return String(value)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+
+}
+
+function escapeAttribute(value) {
+
+return escapeHTML(value);
 
     }
-
-
-    // ===============================
-    // YONO TAB
-    // ===============================
-
-    if (yonoTab) {
-
-        yonoTab.addEventListener("click", function() {
-
-            currentCategory = "yono";
-
-            yonoTab.classList.add("active");
-
-            if (othersTab) {
-                othersTab.classList.remove("active");
-            }
-
-            renderGames();
-
-        });
-
-    }
-
-
-    // ===============================
-    // OTHERS TAB
-    // ===============================
-
-    if (othersTab) {
-
-        othersTab.addEventListener("click", function() {
-
-            currentCategory = "others";
-
-            othersTab.classList.add("active");
-
-            if (yonoTab) {
-                yonoTab.classList.remove("active");
-            }
-
-            renderGames();
-
-        });
-
-    }
-
-
-    // ===============================
-    // SEARCH
-    // ===============================
-
-    if (searchInput) {
-
-        searchInput.addEventListener("input", function() {
-
-            renderGames();
-
-        });
-
-    }
-
-
-    // ===============================
-    // START
-    // ===============================
-
-    loadGames();
-
-        }
