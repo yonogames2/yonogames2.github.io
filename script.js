@@ -1,4 +1,4 @@
-console.log("script.js v6 started");
+alert("NEW SCRIPT LOADED");
 
 const gameList =
 document.getElementById("game-list");
