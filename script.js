@@ -1,11 +1,4 @@
-console.log("SCRIPT.JS VERSION 7 LOADED");
-
-
-/* =================================
-   TEST POPUP
-================================= */
-
-alert("NEW SCRIPT LOADED");
+console.log("SCRIPT.JS VERSION 8 LOADED");
 
 
 /* =================================
@@ -22,7 +15,6 @@ const gameList =
 
 const SUPABASE_URL =
     "https://srbvlfjthbkdixlwlcvz.supabase.co";
-
 
 const SUPABASE_KEY =
     "sb_publishable_-pF6ErKu9TUaxnrXodt0cg_HP9uEY9m";
@@ -95,9 +87,9 @@ function escapeHTML(value) {
 
 async function loadGames() {
 
-    showMessage(
-        "Loading games..."
-    );
+    showMessage("Loading games...");
+
+    console.log("Loading games...");
 
 
     try {
@@ -125,18 +117,23 @@ async function loadGames() {
 
 
         console.log(
-            "SUPABASE DATA:",
+            "Supabase data:",
             data
         );
 
 
         console.log(
-            "SUPABASE ERROR:",
+            "Supabase error:",
             error
         );
 
 
         if (error) {
+
+            console.error(
+                "Supabase error:",
+                error
+            );
 
             showMessage(
                 "Supabase Error: " +
@@ -147,8 +144,13 @@ async function loadGames() {
         }
 
 
-        allGames =
-            data || [];
+        allGames = data || [];
+
+
+        console.log(
+            "Games loaded:",
+            allGames.length
+        );
 
 
         renderGames();
@@ -156,18 +158,24 @@ async function loadGames() {
 
     } catch (error) {
 
-        console.error(error);
+        console.error(
+            "Connection error:",
+            error
+        );
 
         showMessage(
             "Connection Error: " +
-            error.message
+            (
+                error.message ||
+                "Unknown error"
+            )
         );
     }
 }
 
 
 /* =================================
-   RENDER
+   RENDER GAMES
 ================================= */
 
 function renderGames() {
@@ -179,6 +187,10 @@ function renderGames() {
         allGames.filter(
             function(game) {
 
+
+                /* =========================
+                   CATEGORY
+                ========================= */
 
                 const category =
                     String(
@@ -205,6 +217,10 @@ function renderGames() {
                 }
 
 
+                /* =========================
+                   SEARCH
+                ========================= */
+
                 const name =
                     String(
                         game.name || ""
@@ -227,6 +243,10 @@ function renderGames() {
         );
 
 
+    /* =========================
+       NO GAME
+    ========================= */
+
     if (
         filteredGames.length === 0
     ) {
@@ -241,6 +261,10 @@ function renderGames() {
 
     gameList.innerHTML = "";
 
+
+    /* =========================
+       CREATE GAME CARDS
+    ========================= */
 
     filteredGames.forEach(
         function(game) {
@@ -271,59 +295,129 @@ function renderGames() {
                             game.logo_url
                         )}"
                         alt="${escapeHTML(
-                            game.name || "Game"
+                            game.name ||
+                            "Game"
                         )}"
+                        onerror="
+                            this.style.display='none';
+                            this.parentElement.innerHTML='🎮';
+                        "
                     >
                 `;
             }
 
 
             /* =========================
-               TEST LINK
-               
-               IMPORTANT:
-               TEMPORARILY USING
-               EXAMPLE.COM
+               GET LINK FROM SUPABASE
             ========================= */
 
             let gameLink =
-                "https://example.com";
+                String(
+                    game.playstore_link ||
+                    ""
+                ).trim();
 
 
             console.log(
-                "TEST GAME LINK:",
+                "Game:",
+                game.name
+            );
+
+
+            console.log(
+                "Database Link:",
                 gameLink
             );
+
+
+            /* =========================
+               ADD HTTPS IF NEEDED
+            ========================= */
+
+            if (
+                gameLink &&
+                !gameLink.startsWith(
+                    "http://"
+                ) &&
+                !gameLink.startsWith(
+                    "https://"
+                )
+            ) {
+
+                gameLink =
+                    "https://" +
+                    gameLink;
+            }
 
 
             /* =========================
                DOWNLOAD BUTTON
             ========================= */
 
-            const downloadButton = `
+            let downloadButton;
 
-                <a
-                    class="download"
-                    href="${gameLink}"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
 
-                    <span>
-                        ⇩
-                    </span>
+            if (gameLink) {
 
-                    <span>
-                        Download
-                    </span>
+                downloadButton = `
 
-                </a>
+                    <a
+                        class="download"
 
-            `;
+                        href="${escapeHTML(
+                            gameLink
+                        )}"
+
+                        target="_blank"
+
+                        rel="noopener noreferrer"
+                    >
+
+                        <span>
+                            ⇩
+                        </span>
+
+                        <span>
+                            Download
+                        </span>
+
+                    </a>
+
+                `;
+
+            } else {
+
+                downloadButton = `
+
+                    <button
+                        class="download"
+
+                        type="button"
+
+                        disabled
+
+                        style="
+                            opacity:0.5;
+                            cursor:not-allowed;
+                        "
+                    >
+
+                        <span>
+                            ⇩
+                        </span>
+
+                        <span>
+                            Link Not Available
+                        </span>
+
+                    </button>
+
+                `;
+            }
 
 
             /* =========================
-               CARD
+               GAME CARD
             ========================= */
 
             card.innerHTML = `
@@ -351,6 +445,7 @@ function renderGames() {
                     <div class="signup-bonus">
 
                         Sign Up Bonus:
+
                         ${escapeHTML(
                             game.signup_bonus ||
                             "N/A"
@@ -362,6 +457,7 @@ function renderGames() {
                     <div class="minimum-withdrawal">
 
                         Minimum Withdrawal:
+
                         ${escapeHTML(
                             game.minimum_withdrawal ||
                             "N/A"
@@ -419,9 +515,7 @@ function renderGames() {
             `;
 
 
-            gameList.appendChild(
-                card
-            );
+            gameList.appendChild(card);
 
         }
     );
@@ -433,9 +527,7 @@ function renderGames() {
 ================================= */
 
 const search =
-    document.getElementById(
-        "search"
-    );
+    document.getElementById("search");
 
 
 if (search) {
@@ -459,15 +551,11 @@ if (search) {
 ================================= */
 
 const yonoTab =
-    document.getElementById(
-        "yonoTab"
-    );
+    document.getElementById("yonoTab");
 
 
 const otherTab =
-    document.getElementById(
-        "otherTab"
-    );
+    document.getElementById("otherTab");
 
 
 if (yonoTab) {
@@ -476,8 +564,7 @@ if (yonoTab) {
         "click",
         function() {
 
-            currentTab =
-                "yono";
+            currentTab = "yono";
 
 
             yonoTab.classList.add(
@@ -510,8 +597,7 @@ if (otherTab) {
         "click",
         function() {
 
-            currentTab =
-                "others";
+            currentTab = "others";
 
 
             otherTab.classList.add(
