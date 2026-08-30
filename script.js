@@ -1,16 +1,6 @@
-console.log("SCRIPT.JS VERSION 9 LOADED");
-
-
-/* =================================
-   GAME LIST
-================================= */
+console.log("LINK TEST VERSION LOADED");
 
 const gameList = document.getElementById("game-list");
-
-
-/* =================================
-   SUPABASE
-================================= */
 
 const SUPABASE_URL =
     "https://srbvlfjthbkdixlwlcvz.supabase.co";
@@ -24,15 +14,8 @@ const supabaseClient =
         SUPABASE_KEY
     );
 
-
-/* =================================
-   VARIABLES
-================================= */
-
 let allGames = [];
-
 let currentTab = "yono";
-
 let searchText = "";
 
 
@@ -49,28 +32,6 @@ function showMessage(message) {
             ${message}
         </div>
     `;
-}
-
-
-/* =================================
-   ESCAPE HTML
-================================= */
-
-function escapeHTML(value) {
-
-    if (
-        value === null ||
-        value === undefined
-    ) {
-        return "";
-    }
-
-    return String(value)
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
 }
 
 
@@ -95,15 +56,10 @@ async function loadGames() {
                 ascending: true
             });
 
-
-        console.log("SUPABASE DATA:", data);
-
-        console.log("SUPABASE ERROR:", error);
-
+        console.log("DATABASE DATA:", data);
+        console.log("DATABASE ERROR:", error);
 
         if (error) {
-
-            console.error(error);
 
             showMessage(
                 "Supabase Error: " +
@@ -113,12 +69,9 @@ async function loadGames() {
             return;
         }
 
-
         allGames = data || [];
 
-
         renderGames();
-
 
     } catch (error) {
 
@@ -133,19 +86,15 @@ async function loadGames() {
 
 
 /* =================================
-   RENDER GAMES
+   RENDER
 ================================= */
 
 function renderGames() {
 
     if (!gameList) return;
 
-
     const filteredGames =
         allGames.filter(function(game) {
-
-
-            /* CATEGORY */
 
             const category =
                 String(
@@ -154,9 +103,7 @@ function renderGames() {
                 .trim()
                 .toLowerCase();
 
-
             let categoryMatch;
-
 
             if (currentTab === "yono") {
 
@@ -169,31 +116,23 @@ function renderGames() {
                     category !== "yono";
             }
 
-
-            /* SEARCH */
-
             const name =
                 String(
                     game.name || ""
                 )
                 .toLowerCase();
 
-
             const searchMatch =
                 name.includes(
                     searchText.toLowerCase()
                 );
 
-
             return (
                 categoryMatch &&
                 searchMatch
             );
-
         });
 
-
-    /* NO GAME */
 
     if (filteredGames.length === 0) {
 
@@ -208,14 +147,10 @@ function renderGames() {
     gameList.innerHTML = "";
 
 
-    /* CREATE CARDS */
-
     filteredGames.forEach(function(game) {
-
 
         const card =
             document.createElement("div");
-
 
         card.className =
             "game-card";
@@ -225,10 +160,10 @@ function renderGames() {
            LOGO
         ================================= */
 
-        const logoBox =
+        const logo =
             document.createElement("div");
 
-        logoBox.className = "logo";
+        logo.className = "logo";
 
 
         if (game.logo_url) {
@@ -240,20 +175,20 @@ function renderGames() {
                 String(game.logo_url).trim();
 
             img.alt =
-                String(game.name || "Game");
+                game.name || "Game";
 
             img.onerror =
                 function() {
 
-                    logoBox.innerHTML = "🎮";
+                    logo.innerHTML = "🎮";
 
                 };
 
-            logoBox.appendChild(img);
+            logo.appendChild(img);
 
         } else {
 
-            logoBox.textContent = "🎮";
+            logo.textContent = "🎮";
 
         }
 
@@ -268,57 +203,55 @@ function renderGames() {
         details.className = "details";
 
 
-        const gameName =
+        const name =
             document.createElement("div");
 
-        gameName.className = "game-name";
+        name.className = "game-name";
 
-        gameName.textContent =
+        name.textContent =
             game.name || "Game";
 
 
-        const signupBonus =
+        const bonus =
             document.createElement("div");
 
-        signupBonus.className =
+        bonus.className =
             "signup-bonus";
 
-        signupBonus.textContent =
+        bonus.textContent =
             "Sign Up Bonus: " +
             (game.signup_bonus || "N/A");
 
 
-        const minimumWithdrawal =
+        const withdrawal =
             document.createElement("div");
 
-        minimumWithdrawal.className =
+        withdrawal.className =
             "minimum-withdrawal";
 
-        minimumWithdrawal.textContent =
+        withdrawal.textContent =
             "Minimum Withdrawal: " +
             (game.minimum_withdrawal || "N/A");
 
 
-        details.appendChild(gameName);
-
-        details.appendChild(signupBonus);
-
-        details.appendChild(minimumWithdrawal);
+        details.appendChild(name);
+        details.appendChild(bonus);
+        details.appendChild(withdrawal);
 
 
         /* =================================
            RIGHT SIDE
         ================================= */
 
-        const rightSide =
+        const right =
             document.createElement("div");
 
-        rightSide.className =
+        right.className =
             "right-side";
 
 
         /* =================================
-           DOWNLOAD LINK
+           DATABASE LINK
         ================================= */
 
         let gameLink =
@@ -328,68 +261,57 @@ function renderGames() {
 
 
         console.log(
-            "GAME:",
-            game.name,
-            "DATABASE LINK:",
+            "GAME NAME:",
+            game.name
+        );
+
+        console.log(
+            "PLAYSTORE_LINK VALUE:",
+            game.playstore_link
+        );
+
+        console.log(
+            "FINAL GAME LINK:",
             gameLink
         );
 
 
-        /* Add HTTPS if missing */
-
-        if (
-            gameLink &&
-            !gameLink.startsWith("http://") &&
-            !gameLink.startsWith("https://")
-        ) {
-
-            gameLink =
-                "https://" + gameLink;
-        }
-
-
         /* =================================
-           CREATE DOWNLOAD BUTTON
+           DOWNLOAD BUTTON
         ================================= */
 
-        const downloadButton =
+        const download =
             document.createElement("a");
 
-
-        downloadButton.className =
+        download.className =
             "download";
 
 
-        downloadButton.textContent =
-            "⇩  Download";
-
-
-        /*
-           IMPORTANT:
-           Link is assigned directly
-           from Supabase.
-        */
-
         if (gameLink) {
 
-            downloadButton.href =
+            download.href =
                 gameLink;
+
+            download.target =
+                "_blank";
+
+            download.rel =
+                "noopener noreferrer";
+
+            download.textContent =
+                "⇩  Download";
 
         } else {
 
-            downloadButton.href =
-                "#";
+            download.href = "#";
 
-            downloadButton.style.opacity =
-                "0.5";
-
-            downloadButton.style.cursor =
-                "not-allowed";
-
-            downloadButton.textContent =
+            download.textContent =
                 "⇩  Link Not Available";
 
-            downloadButton.addEventListener(
+            download.style.opacity =
+                "0.5";
+
+            download.addEventListener(
                 "click",
                 function(event) {
 
@@ -400,22 +322,39 @@ function renderGames() {
         }
 
 
-        downloadButton.target =
-            "_blank";
+        /* =================================
+           SHOW DATABASE LINK
+        ================================= */
+
+        const linkDisplay =
+            document.createElement("div");
+
+        linkDisplay.style.cssText = `
+            margin-top: 6px;
+            font-size: 11px;
+            color: #ffffff;
+            word-break: break-all;
+            text-align: center;
+            opacity: 0.9;
+        `;
 
 
-        downloadButton.rel =
-            "noopener noreferrer";
+        linkDisplay.textContent =
+            "Database Link: " +
+            (
+                gameLink ||
+                "EMPTY"
+            );
 
 
         /* =================================
            RATING + SIZE
         ================================= */
 
-        const basicInfo =
+        const info =
             document.createElement("div");
 
-        basicInfo.className =
+        info.className =
             "basic-info";
 
 
@@ -428,9 +367,7 @@ function renderGames() {
         rating.innerHTML =
             `
             <span class="star">★</span>
-            ${escapeHTML(
-                game.rating ?? "N/A"
-            )}
+            ${game.rating ?? "N/A"}
             `;
 
 
@@ -440,49 +377,39 @@ function renderGames() {
         separator.className =
             "separator";
 
-        separator.textContent =
-            "|";
+        separator.textContent = "|";
 
 
         const size =
             document.createElement("span");
 
-        size.className =
-            "size";
+        size.className = "size";
 
         size.textContent =
             game.size_mb ?? "N/A";
 
 
-        basicInfo.appendChild(rating);
-
-        basicInfo.appendChild(separator);
-
-        basicInfo.appendChild(size);
+        info.appendChild(rating);
+        info.appendChild(separator);
+        info.appendChild(size);
 
 
         /* =================================
-           BUILD RIGHT SIDE
+           BUILD
         ================================= */
 
-        rightSide.appendChild(
-            downloadButton
-        );
+        right.appendChild(download);
 
-        rightSide.appendChild(
-            basicInfo
-        );
+        right.appendChild(linkDisplay);
+
+        right.appendChild(info);
 
 
-        /* =================================
-           BUILD CARD
-        ================================= */
-
-        card.appendChild(logoBox);
+        card.appendChild(logo);
 
         card.appendChild(details);
 
-        card.appendChild(rightSide);
+        card.appendChild(right);
 
 
         gameList.appendChild(card);
@@ -497,7 +424,6 @@ function renderGames() {
 
 const search =
     document.getElementById("search");
-
 
 if (search) {
 
@@ -522,7 +448,6 @@ if (search) {
 const yonoTab =
     document.getElementById("yonoTab");
 
-
 const otherTab =
     document.getElementById("otherTab");
 
@@ -533,8 +458,7 @@ if (yonoTab) {
         "click",
         function() {
 
-            currentTab =
-                "yono";
+            currentTab = "yono";
 
             yonoTab.classList.add(
                 "active"
@@ -564,8 +488,7 @@ if (otherTab) {
         "click",
         function() {
 
-            currentTab =
-                "others";
+            currentTab = "others";
 
             otherTab.classList.add(
                 "active"
