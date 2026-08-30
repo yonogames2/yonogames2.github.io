@@ -7,7 +7,7 @@ console.log("script.js started");
 const SUPABASE_URL = "https://srbvlfjthbkdixlwlcvz.supabase.co";
 
 // YAHAN APNA SUPABASE PUBLISHABLE KEY PASTE KARO
-const SUPABASE_KEY = "YOUR_SUPABASE_PUBLISHABLE_KEY";
+const SUPABASE_KEY = "sb_publishable_-pF6ErKu9TUaxnrXodt0cg_HP9uEY9m";
 
 
 // ===============================
