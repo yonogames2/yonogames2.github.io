@@ -8,10 +8,10 @@ const SUPABASE_URL =
 "https://srbvlfjthbkdixlwlcvz.supabase.co";
 
 // ⚠️ IMPORTANT:
-// YAHAN APNA SUPABASE PUBLISHABLE KEY PASTE KARO
+// sb_publishable_-pF6ErKu9TUaxnrXodt0cg_HP9uEY9m
 
 const SUPABASE_KEY =
-"YOUR_SUPABASE_PUBLISHABLE_KEY";
+"sb_publishable_-pF6ErKu9TUaxnrXodt0cg_HP9uEY9m";
 
 let supabaseClient = null;
 
