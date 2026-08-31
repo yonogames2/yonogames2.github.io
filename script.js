@@ -1,38 +1,14 @@
-console.log("================================");
-console.log("script.js STARTED");
-console.log("================================");
-
+console.log("SCRIPT START");
 
 const SUPABASE_URL =
     "https://srbvlfjthbkdixlwlcvz.supabase.co";
 
-
 const SUPABASE_KEY =
     "sb_publishable_-pF6ErKu9TUaxnrXodt0cg_HP9uEY9m";
 
+const gameList = document.getElementById("game-list");
 
-let supabaseClient = null;
-let allGames = [];
-let currentCategory = "yono";
-
-
-const gameList =
-    document.getElementById("game-list");
-
-const searchInput =
-    document.getElementById("search");
-
-const yonoTab =
-    document.getElementById("yono-tab");
-
-const othersTab =
-    document.getElementById("others-tab");
-
-
-function showMessage(text) {
-
-    if (!gameList) return;
-
+function message(text) {
     gameList.innerHTML = `
         <div class="message">
             ${text}
@@ -40,443 +16,172 @@ function showMessage(text) {
     `;
 }
 
-
-/* ======================================
-   CHECK SUPABASE
-====================================== */
-
 if (!window.supabase) {
 
-    console.error(
-        "Supabase library missing!"
-    );
-
-    showMessage(
-        "Supabase library load nahi hui."
-    );
+    message("❌ Supabase library load nahi hui.");
 
 } else {
 
-    console.log(
-        "Supabase library OK"
+    console.log("Supabase library OK");
+
+    const db = window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
     );
 
+    message("Connecting to database...");
 
-    supabaseClient =
-        window.supabase.createClient(
-            SUPABASE_URL,
-            SUPABASE_KEY
-        );
-
-
-    console.log(
-        "Supabase client OK"
-    );
-
-
-    loadGames();
+    loadGames(db);
 }
 
 
-/* ======================================
-   LOAD GAMES
-====================================== */
-
-async function loadGames() {
-
-    console.log(
-        "Requesting games..."
-    );
-
-
-    showMessage(
-        "Loading games..."
-    );
-
+async function loadGames(db) {
 
     try {
 
+        console.log("Request started");
+
+        const request = db
+            .from("Games")
+            .select("*");
+
+        const timeout = new Promise((_, reject) => {
+            setTimeout(() => {
+                reject(
+                    new Error(
+                        "Database response 10 seconds se nahi aaya."
+                    )
+                );
+            }, 10000);
+        });
+
         const result =
-            await supabaseClient
-                .from("games")
-                .select("*")
-                .eq("is_visible", true);
+            await Promise.race([
+                request,
+                timeout
+            ]);
 
-
-        console.log(
-            "Supabase result:",
-            result
-        );
-
+        console.log("RESULT:", result);
 
         if (result.error) {
 
-            console.error(
-                "SUPABASE ERROR:",
-                result.error
-            );
-
-
-            showMessage(
-                "❌ Games load nahi ho rahe.<br><br>" +
-                result.error.message
-            );
-
+            message(`
+                ❌ Supabase Error
+                <br><br>
+                ${result.error.message}
+            `);
 
             return;
         }
 
+        const games = result.data || [];
 
-        allGames =
-            result.data || [];
+        console.log("GAMES:", games);
 
+        if (games.length === 0) {
 
-        console.log(
-            "Games found:",
-            allGames.length
-        );
-
-
-        if (allGames.length === 0) {
-
-            showMessage(
-                "Database se koi visible game nahi mila."
-            );
+            message(`
+                ⚠️ Database connected,
+                lekin koi row return nahi hui.
+            `);
 
             return;
         }
 
-
-        renderGames();
+        showGames(games);
 
     } catch (error) {
 
-        console.error(
-            "FETCH ERROR:",
-            error
-        );
+        console.error("ERROR:", error);
 
-
-        showMessage(
-            "❌ Error:<br>" +
-            error.message
-        );
+        message(`
+            ❌ Database connection failed
+            <br><br>
+            ${error.message}
+        `);
     }
 }
 
 
-/* ======================================
-   RENDER
-====================================== */
+function showGames(games) {
 
-function renderGames() {
+    gameList.innerHTML = "";
 
-    const search =
-        searchInput
-            ? searchInput.value
-                .trim()
-                .toLowerCase()
-            : "";
+    games.forEach(game => {
 
+        const card = document.createElement("div");
 
-    const games =
-        allGames.filter(function(game) {
+        card.className = "game-card";
 
-            const category =
-                String(
-                    game.category || ""
-                )
-                .trim()
-                .toLowerCase();
-
-
-            const name =
-                String(
-                    game.name || ""
-                )
-                .toLowerCase();
-
-
-            return (
-                category === currentCategory &&
-                name.includes(search)
-            );
-
-        });
-
-
-    console.log(
-        "Current category:",
-        currentCategory
-    );
-
-
-    console.log(
-        "Displaying:",
-        games.length
-    );
-
-
-    if (games.length === 0) {
-
-        showMessage(
-            "Is category me koi game nahi hai."
-        );
-
-        return;
-    }
-
-
-    gameList.innerHTML =
-        games.map(createCard).join("");
-}
-
-
-/* ======================================
-   GAME CARD
-====================================== */
-
-function createCard(game) {
-
-    const name =
-        escapeHTML(
-            game.name || "Game"
-        );
-
-
-    const bonus =
-        escapeHTML(
-            game.signup_bonus || ""
-        );
-
-
-    const withdrawal =
-        escapeHTML(
-            game.minimum_withdrawal || ""
-        );
-
-
-    const rating =
-        escapeHTML(
-            game.rating ?? ""
-        );
-
-
-    const size =
-        escapeHTML(
-            game.size_mb || ""
-        );
-
-
-    const logo =
-        String(
-            game.logo_url || ""
-        ).trim();
-
-
-    const link =
-        String(
-            game.playstore_link || ""
-        ).trim();
-
-
-    let logoHTML = "🎮";
-
-
-    if (logo) {
-
-        logoHTML = `
-            <img
-                src="${escapeAttribute(logo)}"
-                class="game-logo"
-                alt="${name}"
-            >
-        `;
-    }
-
-
-    return `
-        <div class="game-card">
-
+        card.innerHTML = `
             <div class="game-logo-box">
-                ${logoHTML}
+                ${
+                    game.logo_url
+                    ? `<img
+                        src="${game.logo_url}"
+                        class="game-logo"
+                      >`
+                    : "🎮"
+                }
             </div>
 
-
-            <div>
+            <div class="game-info">
 
                 <div class="game-name">
-                    ${name}
+                    ${game.name || "Game"}
                 </div>
 
                 <div class="signup-bonus">
-                    Sign Up Bonus: ${bonus}
+                    Sign Up Bonus:
+                    ${game.signup_bonus || ""}
                 </div>
 
                 <div class="minimum-withdrawal">
                     Minimum Withdrawal:
-                    ${withdrawal}
+                    ${game.minimum_withdrawal || ""}
                 </div>
 
             </div>
-
 
             <div class="game-action">
 
                 <button
                     class="download-btn"
-                    onclick="openGame('${escapeJS(link)}')"
+                    onclick="openGame('${game.playstore_link || ""}')"
                 >
                     ⇩<br>
                     Download
                 </button>
 
-
                 <div class="game-meta">
-                    ★ ${rating}
+                    ★ ${game.rating || ""}
                     |
-                    ${size}
+                    ${game.size_mb || ""}
                 </div>
 
             </div>
+        `;
 
-        </div>
-    `;
+        gameList.appendChild(card);
+    });
 }
 
 
-/* ======================================
-   OPEN LINK
-====================================== */
+function openGame(link) {
 
-window.openGame =
-    function(link) {
+    if (!link) {
 
-        link =
-            String(link || "").trim();
+        alert("Download link available nahi hai.");
 
+        return;
+    }
 
-        if (!link) {
+    if (
+        !link.startsWith("http://") &&
+        !link.startsWith("https://")
+    ) {
+        link = "https://" + link;
+    }
 
-            alert(
-                "Download link available nahi hai."
-            );
-
-            return;
-        }
-
-
-        if (
-            !link.startsWith("http://") &&
-            !link.startsWith("https://")
-        ) {
-
-            link =
-                "https://" + link;
-        }
-
-
-        window.location.href =
-            link;
-    };
-
-
-/* ======================================
-   YONO
-====================================== */
-
-if (yonoTab) {
-
-    yonoTab.onclick =
-        function() {
-
-            currentCategory =
-                "yono";
-
-
-            yonoTab.classList.add(
-                "active"
-            );
-
-
-            othersTab.classList.remove(
-                "active"
-            );
-
-
-            renderGames();
-        };
-}
-
-
-/* ======================================
-   OTHERS
-====================================== */
-
-if (othersTab) {
-
-    othersTab.onclick =
-        function() {
-
-            currentCategory =
-                "others";
-
-
-            othersTab.classList.add(
-                "active"
-            );
-
-
-            yonoTab.classList.remove(
-                "active"
-            );
-
-
-            renderGames();
-        };
-}
-
-
-/* ======================================
-   SEARCH
-====================================== */
-
-if (searchInput) {
-
-    searchInput.oninput =
-        function() {
-
-            renderGames();
-        };
-}
-
-
-/* ======================================
-   SECURITY
-====================================== */
-
-function escapeHTML(value) {
-
-    return String(value)
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
-}
-
-
-function escapeAttribute(value) {
-
-    return escapeHTML(value);
-}
-
-
-function escapeJS(value) {
-
-    return String(value)
-        .replace(/\\/g, "\\\\")
-        .replace(/'/g, "\\'")
-        .replace(/\n/g, "\\n")
-        .replace(/\r/g, "\\r");
-}
+    window.location.href = link;
+    }
