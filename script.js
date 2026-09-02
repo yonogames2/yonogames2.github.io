@@ -17,7 +17,7 @@ function showMessage(message) {
 
 if (!window.supabase) {
     console.error("Supabase library load nahi hui.");
-    showMessage("sb_publishable_-pF6ErKu9TUaxnrXodt0cg_HP9uEY9m,");
+    showMessage("Supabase library load nahi hui.");
 } else {
 
     const SUPABASE_URL = "https://srbvlfjthbkdixlwlcvz.supabase.co";
@@ -53,6 +53,27 @@ if (!window.supabase) {
     function showGames(category) {
 
         currentCategory = category;
+
+        // Active green light
+        const yonoButton =
+            document.getElementById("yono-btn");
+
+        const othersButton =
+            document.getElementById("others-btn");
+
+        if (yonoButton && othersButton) {
+
+            yonoButton.classList.remove("active");
+            othersButton.classList.remove("active");
+
+            if (category === "yono") {
+                yonoButton.classList.add("active");
+            }
+
+            if (category === "others") {
+                othersButton.classList.add("active");
+            }
+        }
 
         const games = allGames.filter(game => {
 
@@ -288,4 +309,4 @@ if (!window.supabase) {
 
     // Load games
     loadGames();
-               }
+                }
