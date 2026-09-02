@@ -20,8 +20,8 @@ if (!window.supabase) {
     showMessage("sb_publishable_-pF6ErKu9TUaxnrXodt0cg_HP9uEY9m,");
 } else {
 
-    const SUPABASE_URL = "YOUR_SUPABASE_URL";
-    const SUPABASE_KEY = "YOUR_SUPABASE_ANON_KEY";
+    const SUPABASE_URL = "https://srbvlfjthbkdixlwlcvz.supabase.co";
+    const SUPABASE_KEY = "sb_publishable_-pF6ErKu9TUaxnrXodt0cg_HP9uEY9m";
 
     const supabaseClient =
         window.supabase.createClient(
