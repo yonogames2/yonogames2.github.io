@@ -1,4 +1,3 @@
-
 console.log("SCRIPT START");
 
 
@@ -344,7 +343,7 @@ function showGames(games) {
 
 
         /* =========================
-           DOWNLOAD BUTTON
+           DOWNLOAD BUTTON (UPDATED)
         ========================= */
 
         const downloadButton =
@@ -369,11 +368,12 @@ function showGames(games) {
 
 
                 console.log(
-                    "DOWNLOAD CLICKED"
+                    "DOWNLOAD CLICKED FOR:",
+                    game.name
                 );
 
                 console.log(
-                    "LINK:",
+                    "TARGET LINK:",
                     link
                 );
 
@@ -388,6 +388,7 @@ function showGames(games) {
                 }
 
 
+                // Protocol fix (agar http/https miss ho)
                 if (
                     !link.startsWith(
                         "http://"
@@ -404,11 +405,14 @@ function showGames(games) {
 
 
                 /*
-                   Open exact link
+                   Play Store home page redirect issue bypass karne ke liye
+                   link ko Chrome/Browser me new tab me open kar rahe hain.
                 */
 
-                window.location.assign(
-                    link
+                window.open(
+                    link,
+                    "_blank",
+                    "noopener,noreferrer"
                 );
 
             }
@@ -528,4 +532,4 @@ function escapeHTML(value) {
             /'/g,
             "&#039;"
         );
-    }
+   }
