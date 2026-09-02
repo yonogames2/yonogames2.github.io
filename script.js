@@ -4,7 +4,7 @@ const SUPABASE_URL =
     "https://srbvlfjthbkdixlwlcvz.supabase.co";
 
 const SUPABASE_KEY =
-    "APNI_WALI_PUBLISHABLE_KEY_YAHAN_RAKHO";
+    "sb_publishable_-pF6ErKu9TUaxnrXodt0cg_HP9uEY9m";
 
 const gameList = document.getElementById("game-list");
 
