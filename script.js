@@ -4,22 +4,22 @@ const SUPABASE_URL =
     "https://srbvlfjthbkdixlwlcvz.supabase.co";
 
 const SUPABASE_KEY =
-    "sb_publishable_-pF6ErKu9TUaxnrXodt0cg_HP9uEY9m";
+    "APNI_WALI_PUBLISHABLE_KEY_YAHAN_RAKHO";
 
 const gameList = document.getElementById("game-list");
 
 function message(text) {
-    gameList.innerHTML = `
-        <div class="message">
-            ${text}
-        </div>
-    `;
+    if (gameList) {
+        gameList.innerHTML = `
+            <div class="message">
+                ${text}
+            </div>
+        `;
+    }
 }
 
 if (!window.supabase) {
-
     message("❌ Supabase library load nahi hui.");
-
 } else {
 
     console.log("Supabase library OK");
@@ -41,54 +41,37 @@ async function loadGames(db) {
 
         console.log("Request started");
 
-        const request = db
-            .from("Games")
-            .select("*");
+        const { data, error } = await db
+            .from("games")
+            .select("*")
+            .eq("is_visible", true);
 
-        const timeout = new Promise((_, reject) => {
-            setTimeout(() => {
-                reject(
-                    new Error(
-                        "Database response 10 seconds se nahi aaya."
-                    )
-                );
-            }, 10000);
-        });
+        console.log("DATA:", data);
+        console.log("ERROR:", error);
 
-        const result =
-            await Promise.race([
-                request,
-                timeout
-            ]);
-
-        console.log("RESULT:", result);
-
-        if (result.error) {
+        if (error) {
 
             message(`
                 ❌ Supabase Error
                 <br><br>
-                ${result.error.message}
+                ${error.message}
             `);
 
             return;
         }
 
-        const games = result.data || [];
-
-        console.log("GAMES:", games);
-
-        if (games.length === 0) {
+        if (!data || data.length === 0) {
 
             message(`
                 ⚠️ Database connected,
-                lekin koi row return nahi hui.
+                <br><br>
+                lekin koi visible game nahi mila.
             `);
 
             return;
         }
 
-        showGames(games);
+        showGames(data);
 
     } catch (error) {
 
@@ -114,16 +97,17 @@ function showGames(games) {
         card.className = "game-card";
 
         card.innerHTML = `
+
             <div class="game-logo-box">
+
                 ${
                     game.logo_url
-                    ? `<img
-                        src="${game.logo_url}"
-                        class="game-logo"
-                      >`
+                    ? `<img src="${game.logo_url}" class="game-logo">`
                     : "🎮"
                 }
+
             </div>
+
 
             <div class="game-info">
 
@@ -143,11 +127,12 @@ function showGames(games) {
 
             </div>
 
+
             <div class="game-action">
 
                 <button
                     class="download-btn"
-                    onclick="openGame('${game.playstore_link || ""}')"
+                    onclick="openGame(${JSON.stringify(game.playstore_link || "")})"
                 >
                     ⇩<br>
                     Download
@@ -180,6 +165,7 @@ function openGame(link) {
         !link.startsWith("http://") &&
         !link.startsWith("https://")
     ) {
+
         link = "https://" + link;
     }
 
