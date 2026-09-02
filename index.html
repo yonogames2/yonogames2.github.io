@@ -2,11 +2,8 @@
 <html lang="en">
 
 <head>
-
     <meta charset="UTF-8">
-
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>YONO GAMES</title>
 
@@ -16,6 +13,12 @@
             box-sizing: border-box;
             margin: 0;
             padding: 0;
+        }
+
+        html,
+        body {
+            width: 100%;
+            min-height: 100%;
         }
 
         body {
@@ -39,7 +42,6 @@
         .header h1 {
             font-size: 28px;
             font-weight: bold;
-            color: #ffffff;
         }
 
         .header p {
@@ -66,6 +68,7 @@
             color: white;
 
             font-size: 15px;
+
             outline: none;
         }
 
@@ -97,6 +100,8 @@
             font-weight: bold;
 
             cursor: pointer;
+
+            touch-action: manipulation;
         }
 
         .tab.active {
@@ -115,12 +120,11 @@
         /* GAME CARD */
 
         .game-card {
-
             display: grid;
 
             grid-template-columns:
                 74px
-                1fr
+                minmax(0, 1fr)
                 82px;
 
             gap: 10px;
@@ -144,14 +148,13 @@
             border-radius: 15px;
 
             box-shadow:
-                0 5px 15px rgba(0,0,0,0.25);
+                0 5px 15px rgba(0, 0, 0, 0.25);
         }
 
 
         /* LOGO */
 
         .game-logo-box {
-
             width: 74px;
             height: 74px;
 
@@ -169,22 +172,19 @@
         }
 
         .game-logo {
-
             width: 100%;
             height: 100%;
-
             object-fit: cover;
         }
 
 
-        /* GAME INFO */
+        /* INFO */
 
         .game-info {
             min-width: 0;
         }
 
         .game-name {
-
             font-size: 17px;
             font-weight: bold;
 
@@ -196,7 +196,6 @@
         }
 
         .signup-bonus {
-
             color: #ff5555;
 
             font-size: 13px;
@@ -206,22 +205,18 @@
         }
 
         .minimum-withdrawal {
-
             color: white;
-
             font-size: 12px;
         }
 
 
-        /* DOWNLOAD */
+        /* ACTION */
 
         .game-action {
-
             text-align: center;
         }
 
         .download-btn {
-
             width: 78px;
 
             border: none;
@@ -236,6 +231,10 @@
             font-weight: bold;
 
             cursor: pointer;
+
+            touch-action: manipulation;
+
+            -webkit-tap-highlight-color: transparent;
         }
 
         .download-btn:active {
@@ -243,7 +242,6 @@
         }
 
         .game-meta {
-
             margin-top: 9px;
 
             color: #d7eee5;
@@ -255,7 +253,6 @@
         /* MESSAGE */
 
         .message {
-
             text-align: center;
 
             padding: 35px 15px;
@@ -269,7 +266,6 @@
         /* FOOTER */
 
         .footer {
-
             text-align: center;
 
             padding: 20px;
@@ -285,10 +281,9 @@
         @media (max-width: 380px) {
 
             .game-card {
-
                 grid-template-columns:
                     64px
-                    1fr
+                    minmax(0, 1fr)
                     75px;
 
                 gap: 8px;
@@ -297,7 +292,6 @@
             }
 
             .game-logo-box {
-
                 width: 64px;
                 height: 64px;
             }
@@ -347,6 +341,7 @@
             type="text"
             id="search"
             placeholder="🔍 Search games..."
+            autocomplete="off"
         >
 
     </div>
@@ -357,17 +352,17 @@
     <div class="tabs">
 
         <button
+            type="button"
             class="tab active"
             id="yono-tab"
-            onclick="changeCategory('yono')"
         >
             🎮 YONO GAMES
         </button>
 
         <button
+            type="button"
             class="tab"
             id="others-tab"
-            onclick="changeCategory('others')"
         >
             🎮 OTHERS GAMES
         </button>
@@ -375,7 +370,7 @@
     </div>
 
 
-    <!-- GAME LIST -->
+    <!-- GAMES -->
 
     <main id="game-list">
 
@@ -389,9 +384,7 @@
     <!-- FOOTER -->
 
     <div class="footer">
-
         © 2026 YONO GAMES
-
     </div>
 
 
@@ -399,123 +392,9 @@
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-    <!-- YOUR SCRIPT -->
+    <!-- SCRIPT -->
 
-    <script src="./script.js?v=6"></script>
-
-
-    <script>
-
-        let currentCategory = "yono";
-
-
-        function changeCategory(category) {
-
-            currentCategory = category;
-
-            document
-                .getElementById("yono-tab")
-                .classList
-                .remove("active");
-
-            document
-                .getElementById("others-tab")
-                .classList
-                .remove("active");
-
-
-            if (category === "yono") {
-
-                document
-                    .getElementById("yono-tab")
-                    .classList
-                    .add("active");
-
-            } else {
-
-                document
-                    .getElementById("others-tab")
-                    .classList
-                    .add("active");
-
-            }
-
-            if (window.allGames) {
-
-                filterGames();
-
-            }
-        }
-
-
-        document
-            .getElementById("search")
-            .addEventListener(
-                "input",
-                filterGames
-            );
-
-
-        function filterGames() {
-
-            if (!window.allGames) return;
-
-
-            const searchText =
-                document
-                    .getElementById("search")
-                    .value
-                    .toLowerCase()
-                    .trim();
-
-
-            const filtered =
-                window.allGames.filter(game => {
-
-                    const category =
-                        String(
-                            game.category || ""
-                        )
-                        .toLowerCase()
-                        .trim();
-
-
-                    const name =
-                        String(
-                            game.name || ""
-                        )
-                        .toLowerCase();
-
-
-                    const categoryMatch =
-                        category === currentCategory;
-
-
-                    const searchMatch =
-                        name.includes(searchText);
-
-
-                    return (
-                        categoryMatch &&
-                        searchMatch
-                    );
-
-                });
-
-
-            if (
-                typeof showGames ===
-                "function"
-            ) {
-
-                showGames(filtered);
-
-            }
-
-        }
-
-    </script>
-
+    <script src="./script.js?v=7"></script>
 
 </body>
 
