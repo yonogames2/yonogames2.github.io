@@ -309,4 +309,4 @@ if (!window.supabase) {
 
     // Load games
     loadGames();
-                }
+}
