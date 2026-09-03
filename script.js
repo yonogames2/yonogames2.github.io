@@ -310,3 +310,12 @@ if (!window.supabase) {
     // Load games
     loadGames();
 }
+
+const menuBtn = document.getElementById("menu-btn");
+const menuBox = document.getElementById("menu-box");
+
+if (menuBtn && menuBox) {
+    menuBtn.addEventListener("click", () => {
+        menuBox.classList.toggle("show");
+    });
+}
