@@ -27,6 +27,7 @@ body {
         linear-gradient(180deg, #001b08 0%, #002b10 45%, #001d0a 100%);
 }
 
+
 /* HEADER */
 
 .header {
@@ -40,13 +41,15 @@ body {
     font-weight: 800;
     letter-spacing: 1px;
 }
-    .header .tagline {
+
+.header .tagline {
     margin: 8px 10px 0;
     color: #9fffae;
     font-size: 14px;
     font-weight: 600;
-    }
-    
+}
+
+
 /* SEARCH */
 
 .search-box {
@@ -85,6 +88,7 @@ body {
 .search-box input::placeholder {
     color: #aaa;
 }
+
 
 /* CATEGORY BUTTONS */
 
@@ -134,7 +138,8 @@ body {
     transform: scale(.98);
 }
 
-/* Active button */
+
+/* ACTIVE BUTTON */
 
 .category-btn.active {
     color: white;
@@ -150,6 +155,7 @@ body {
         0 0 16px rgba(57,255,20,.55);
 }
 
+
 /* GAMES */
 
 #game-list {
@@ -160,6 +166,7 @@ body {
 
     padding-bottom: 30px;
 }
+
 
 /* GAME CARD */
 
@@ -197,6 +204,7 @@ body {
     align-items: center;
 }
 
+
 /* LOGO */
 
 .game-logo {
@@ -225,6 +233,7 @@ body {
 
     object-fit: cover;
 }
+
 
 /* GAME INFO */
 
@@ -264,6 +273,7 @@ body {
     font-weight: 600;
 }
 
+
 /* DOWNLOAD SIDE */
 
 .game-action {
@@ -277,6 +287,7 @@ body {
 
     gap: 10px;
 }
+
 
 /* DOWNLOAD BUTTON */
 
@@ -322,6 +333,7 @@ body {
     transform: scale(.98);
 }
 
+
 /* RATING + SIZE */
 
 .game-meta {
@@ -343,13 +355,13 @@ body {
 
 .game-meta .star {
     color: #ffd900;
-
     font-size: 23px;
 }
 
 .game-meta .separator {
     color: #aaa;
 }
+
 
 /* MESSAGE */
 
@@ -362,6 +374,7 @@ body {
 
     font-size: 18px;
 }
+
 
 /* MOBILE */
 
@@ -377,9 +390,7 @@ body {
 
     .search-box {
         height: 62px;
-
         margin-top: 15px;
-
         border-radius: 20px;
     }
 
@@ -396,59 +407,59 @@ body {
         padding: 13px 3px;
     }
 
+
+    /* MOBILE GAME CARD */
+
     .game-card {
-    min-height: 88px;
+        min-height: 88px;
 
-    grid-template-columns: 42px 1fr;
+        grid-template-columns: 42px 1fr;
 
-    gap: 6px;
+        gap: 6px;
 
-    padding: 6px;
+        padding: 6px;
 
-    border-radius: 10px;
-}
+        border-radius: 10px;
+    }
 
-.game-logo {
-    width: 42px;
-    height: 42px;
+    .game-logo {
+        width: 42px;
+        height: 42px;
 
-    border-radius: 8px;
+        border-radius: 8px;
 
-    font-size: 17px;
-}
+        font-size: 17px;
+    }
 
-.game-name {
-    font-size: 14px;
-    margin-bottom: 3px;
-}
+    .game-name {
+        font-size: 14px;
+        margin-bottom: 3px;
+    }
 
-.signup {
-    font-size: 10px;
-    margin-bottom: 2px;
-}
+    .signup {
+        font-size: 10px;
+        margin-bottom: 2px;
+    }
 
-.withdraw {
-    font-size: 10px;
-}
+    .withdraw {
+        font-size: 10px;
+    }
 
-.download-btn {
-    min-height: 28px;
-    font-size: 11px;
-    padding: 5px 7px;
-}
+    .download-btn {
+        min-height: 28px;
+        font-size: 11px;
+        padding: 5px 7px;
+    }
 
-.game-meta {
-    font-size: 10px;
-}
-
-.game-meta .star {
-    font-size: 10px;
+    .game-meta {
+        font-size: 10px;
     }
 
     .game-meta .star {
-        font-size: 12px;
+        font-size: 10px;
     }
 }
+
 
 /* SMALL MOBILE */
 
@@ -456,16 +467,22 @@ body {
 
     .game-card {
         min-height: 82px;
+
         grid-template-columns: 40px 1fr;
+
         gap: 5px;
+
         padding: 5px;
+
         border-radius: 9px;
     }
 
     .game-logo {
         width: 40px;
         height: 40px;
+
         border-radius: 7px;
+
         font-size: 16px;
     }
 
@@ -485,7 +502,9 @@ body {
 
     .download-btn {
         min-height: 26px;
+
         font-size: 10px;
+
         padding: 4px 6px;
     }
 
@@ -497,45 +516,71 @@ body {
         font-size: 10px;
     }
 }
-    
+
+
+/* MENU */
+
 .menu-container {
     position: fixed;
+
     top: 12px;
     left: 12px;
+
     z-index: 9999;
-    }
-    
+}
+
 .menu-btn {
     width: 42px;
     height: 42px;
+
     border: 1px solid #39ff14;
+
     border-radius: 50%;
+
     background: #063b16;
+
     color: white;
+
     font-size: 28px;
+
     line-height: 1;
+
     cursor: pointer;
 }
 
 .menu-box {
     display: none;
+
     position: absolute;
+
     top: 48px;
     left: 0;
+
     width: 170px;
+
     padding: 8px;
+
     background: #063b16;
+
     border: 1px solid #39ff14;
+
     border-radius: 12px;
-    box-shadow: 0 0 12px rgba(57,255,20,.35);
+
+    box-shadow:
+        0 0 12px rgba(57,255,20,.35);
 }
 
 .menu-box a {
     display: block;
+
     padding: 12px 10px;
+
     color: white;
+
     text-decoration: none;
+
     font-size: 15px;
+
     border-radius: 8px;
 }
 
@@ -545,40 +590,68 @@ body {
 
 .menu-box.show {
     display: block;
-    }
-    
+}
+
 </style>
 </head>
 
+
 <body>
+
+
+<!-- 3 DOT MENU -->
 
 <div class="menu-container">
 
-    <button id="menu-btn" class="menu-btn" type="button">
+    <button
+        id="menu-btn"
+        class="menu-btn"
+        type="button"
+    >
         ⋮
     </button>
 
-    <div id="menu-box" class="menu-box">
+    <div
+        id="menu-box"
+        class="menu-box"
+    >
 
-        <a href="#" target="_blank">
+        <a
+            href="#"
+            target="_blank"
+        >
             💬 WhatsApp
         </a>
 
-        <a href="#" target="_blank">
+        <a
+            href="#"
+            target="_blank"
+        >
             ✈️ Telegram
         </a>
 
     </div>
 
 </div>
-    
+
+
+<!-- HEADER -->
+
 <div class="header">
-    <h1>🎮 YONO GAMES</h1>
+
+    <h1>
+        🎮 YONO GAMES
+    </h1>
+
     <p class="tagline">
-    YOUR ONE-STOP DESTINATION TO DISCOVER TOP ONLINE GAMES,
-    EXCITING OFFERS, RATINGS, AND TRUSTED GAMING PLATFORMS.
+        YOUR ONE-STOP DESTINATION TO DISCOVER TOP ONLINE GAMES,
+        EXCITING OFFERS, RATINGS, AND TRUSTED GAMING PLATFORMS.
     </p>
+
 </div>
+
+
+<!-- SEARCH -->
 
 <div class="search-box">
 
@@ -590,6 +663,9 @@ body {
     >
 
 </div>
+
+
+<!-- CATEGORY BUTTONS -->
 
 <div class="category-buttons">
 
@@ -611,6 +687,9 @@ body {
 
 </div>
 
+
+<!-- GAME LIST -->
+
 <div id="game-list">
 
     <div class="message">
@@ -619,9 +698,16 @@ body {
 
 </div>
 
+
+<!-- SUPABASE -->
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
+
+<!-- YOUR JAVASCRIPT -->
+
 <script src="script.js"></script>
+
 
 </body>
 
