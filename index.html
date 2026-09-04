@@ -17,864 +17,366 @@ html,
 body {
     margin: 0;
     padding: 0;
+    width: 100%;
     min-height: 100%;
-
     font-family: Arial, sans-serif;
-    color: white;
-
     background:
-        radial-gradient(
-            circle at 50% 10%,
-            rgba(0,255,40,.10),
-            transparent 30%
-        ),
-        linear-gradient(
-            180deg,
-            #001b08 0%,
-            #002b10 45%,
-            #001d0a 100%
-        );
+        radial-gradient(circle at top, #0b5a3d 0%, #063d2a 45%, #021f15 100%);
+    color: white;
 }
 
-
-/* =========================
-   HEADER
-========================= */
+/* HEADER */
 
 .header {
-    text-align: center;
-    padding: 18px 10px 10px;
-}
-
-.header h1 {
-    margin: 0;
-    font-size: 28px;
-    font-weight: 800;
-    letter-spacing: 1px;
-}
-
-.tagline {
-    margin: 8px 10px 0;
-    color: #9fffae;
-    font-size: 14px;
-    font-weight: 600;
-}
-
-
-/* =========================
-   SEARCH
-========================= */
-
-.search-box {
-    width: calc(100% - 24px);
-    max-width: 900px;
-
-    height: 58px;
-
-    margin: 12px auto 15px;
-
-    border: 1px solid #39ff14;
-    border-radius: 18px;
-
-    background: rgba(0,45,10,.65);
-
+    width: 100%;
+    padding: 15px 15px 10px;
     display: flex;
     align-items: center;
+    justify-content: space-between;
+}
 
-    padding: 0 18px;
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+.menu-btn {
+    font-size: 26px;
+    cursor: pointer;
+}
+
+/* MENU */
+
+.menu {
+    display: none;
+    position: absolute;
+    right: 12px;
+    top: 58px;
+    width: 170px;
+    background: #063d2a;
+    border: 1px solid #167653;
+    border-radius: 12px;
+    padding: 8px;
+    z-index: 1000;
+}
+
+.menu a {
+    display: block;
+    color: white;
+    text-decoration: none;
+    padding: 11px;
+    border-radius: 8px;
+}
+
+.menu a:hover {
+    background: #0b543b;
+}
+
+/* SEARCH */
+
+.search-box {
+    padding: 8px 15px;
 }
 
 .search-box input {
     width: 100%;
-    height: 100%;
-
+    padding: 13px 15px;
     border: none;
     outline: none;
-
-    background: transparent;
-
+    border-radius: 12px;
+    background: #0b543b;
     color: white;
-
-    font-size: 17px;
+    font-size: 15px;
 }
 
 .search-box input::placeholder {
-    color: #aaa;
+    color: #b9d5ca;
 }
 
-
-/* =========================
-   CATEGORY
-========================= */
+/* CATEGORY BUTTONS */
 
 .category-buttons {
-    display: grid;
-
-    grid-template-columns: 1fr 1fr;
-
-    width: calc(100% - 24px);
-    max-width: 900px;
-
-    margin: 0 auto 18px;
-
-    padding: 6px;
-
-    border: 1px solid #39ff14;
-    border-radius: 20px;
-
-    background: rgba(0,35,8,.35);
+    display: flex;
+    gap: 10px;
+    padding: 10px 15px;
 }
 
-.category-btn {
-    height: 48px;
-
+.category-buttons button {
+    flex: 1;
+    padding: 12px 8px;
     border: none;
-    border-radius: 14px;
-
-    background: transparent;
-
-    color: #999;
-
-    font-size: 16px;
-    font-weight: 700;
-
+    border-radius: 10px;
+    background: #0b543b;
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
     cursor: pointer;
 }
 
-.category-btn.active {
-    color: white;
-
-    background:
-        linear-gradient(
-            180deg,
-            #49ff18,
-            #17bd00
-        );
-
-    box-shadow:
-        0 0 16px rgba(57,255,20,.55);
+.category-buttons button.active {
+    background: #159b68;
 }
 
+/* SECTION TITLE */
 
-/* =========================
-   OTHERS EXTRA SECTION
-========================= */
+.category-heading,
+.others-title,
+.new-launch-title {
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    margin: 12px 15px;
+}
+
+/* OTHERS EXTRA FEATURES */
 
 #others-extra {
     display: none;
-
-    width: 100%;
 }
 
-
-/* =========================
-   OTHERS TITLE
-========================= */
-
-.others-title {
-    width: calc(100% - 16px);
-    max-width: 900px;
-
-    margin: 0 auto 12px;
-
-    text-align: center;
-
-    font-size: 20px;
-    font-weight: 800;
-}
-
-
-/* =========================
-   BANNER
-========================= */
+/* BANNER */
 
 .banner-section {
-    width: calc(100% - 24px);
-    max-width: 900px;
-
-    margin: 0 auto 18px;
-
-    overflow: hidden;
-
+    width: calc(100% - 30px);
+    margin: 10px 15px 15px;
     aspect-ratio: 2.35 / 1;
-
-    border: 1px solid #39ff14;
-    border-radius: 16px;
-
-    background: #063b16;
-
-    box-shadow:
-        0 0 15px rgba(57,255,20,.25);
+    overflow: hidden;
+    border-radius: 14px;
+    position: relative;
+    background: #063d2a;
 }
 
-.banner-slider {
-    display: flex;
-
+.banner-track {
     width: 100%;
     height: 100%;
-
-    transition:
-        transform .7s ease-in-out;
+    display: flex;
+    transition: transform 0.6s ease-in-out;
 }
 
 .banner-slide {
-    flex: 0 0 100%;
-
+    min-width: 100%;
     width: 100%;
     height: 100%;
-}
-
-.banner-slide img {
-    width: 100%;
-    height: 100%;
-
-    display: block;
-
     object-fit: cover;
+    display: block;
 }
 
-
-/* =========================
-   TELEGRAM
-========================= */
+/* TELEGRAM */
 
 .telegram-section {
-    width: calc(100% - 24px);
-    max-width: 900px;
-
-    margin: 0 auto 20px;
-
     text-align: center;
+    margin: 15px;
 }
 
 .telegram-title {
-    font-size: 20px;
-    font-weight: 800;
-
+    font-size: 18px;
+    font-weight: bold;
     margin-bottom: 10px;
 }
 
 .telegram-btn {
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
-
-    width: 100%;
-    min-height: 52px;
-
-    border-radius: 14px;
-
-    background:
-        linear-gradient(
-            180deg,
-            #39ff14,
-            #16b900
-        );
-
+    display: inline-block;
+    padding: 11px 25px;
+    border-radius: 10px;
+    background: #159b68;
     color: white;
-
     text-decoration: none;
-
-    font-size: 18px;
-    font-weight: 800;
-
-    box-shadow:
-        0 0 14px rgba(57,255,20,.40);
-
-    transition: .15s;
+    font-weight: bold;
 }
 
-.telegram-btn:active {
-    transform: scale(.98);
-}
-
-
-/* =========================
-   DOWNLOAD NEW GAMES
-========================= */
-
-.category-heading {
-    width: calc(100% - 24px);
-    max-width: 900px;
-
-    margin: 0 auto 12px;
-
-    text-align: center;
-
-    color: white;
-
-    font-size: 20px;
-    font-weight: 800;
-
-    letter-spacing: .5px;
-}
-
-
-/* =========================
-   NEW LAUNCH
-========================= */
-
-.new-launch-section {
-    width: calc(100% - 16px);
-    max-width: 900px;
-
-    margin: 0 auto 20px;
-}
-
-.new-launch-title {
-    text-align: center;
-
-    font-size: 20px;
-    font-weight: 800;
-
-    margin-bottom: 10px;
-}
-
-
-/* =========================
-   GAME LIST
-========================= */
+/* GAME LIST */
 
 #game-list {
-    width: calc(100% - 16px);
-    max-width: 900px;
-
-    margin: 0 auto;
-
-    padding-bottom: 30px;
+    padding: 0 15px 20px;
 }
 
-
-/* =========================
-   GAME CARD
-========================= */
+/* GAME CARD */
 
 .game-card {
-    display: grid;
-
-    grid-template-columns:
-        145px
-        1fr
-        250px;
-
-    gap: 15px;
-
     width: 100%;
-
-    min-height: 155px;
-
-    margin-bottom: 15px;
-
-    padding: 14px;
-
-    background:
-        linear-gradient(
-            90deg,
-            rgba(0,45,12,.96),
-            rgba(0,70,18,.65)
-        );
-
-    border: 1px solid #28e916;
-
-    border-radius: 20px;
-
-    box-shadow:
-        0 0 10px rgba(57,255,20,.20);
-
+    min-height: 145px;
+    margin-bottom: 12px;
+    padding: 10px;
+    display: grid;
+    grid-template-columns: 74px 1fr 82px;
+    gap: 10px;
     align-items: center;
+
+    background: #0b543b;
+    border: 1px solid #167653;
+    border-radius: 14px;
 }
-
-
-/* LOGO */
 
 .game-logo {
-    width: 130px;
-    height: 130px;
-
-    border: 1px solid rgba(100,255,80,.8);
-
-    border-radius: 18px;
-
-    background: #063b16;
-
-    overflow: hidden;
-
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
-
-    font-size: 45px;
-}
-
-.game-logo img {
-    width: 100%;
-    height: 100%;
-
+    width: 74px;
+    height: 74px;
+    border-radius: 14px;
     object-fit: cover;
+    background: #063d2a;
 }
-
-
-/* INFO */
 
 .game-info {
     min-width: 0;
-
-    display: flex;
-
-    flex-direction: column;
-
-    justify-content: center;
 }
 
 .game-name {
-    font-size: 26px;
-
+    font-size: 17px;
     font-weight: bold;
-
-    margin-bottom: 12px;
-
-    white-space: nowrap;
-
-    overflow: hidden;
-
-    text-overflow: ellipsis;
+    margin-bottom: 8px;
+    word-break: break-word;
 }
 
-.signup {
-    color: #ff5b5b;
-
-    font-size: 18px;
-
-    font-weight: 700;
-
+.signup-bonus {
+    color: #ff4b4b;
+    font-size: 14px;
     margin-bottom: 7px;
+    font-weight: bold;
 }
 
-.withdraw {
+.minimum-withdrawal {
     color: white;
-
-    font-size: 18px;
-
-    font-weight: 600;
+    font-size: 13px;
 }
-
-
-/* ACTION */
 
 .game-action {
-    display: flex;
-
-    flex-direction: column;
-
-    justify-content: center;
-
-    gap: 10px;
+    text-align: center;
 }
-
-
-/* DOWNLOAD */
 
 .download-btn {
-    min-height: 58px;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    width: 100%;
-
-    border-radius: 14px;
-
-    text-decoration: none;
-
-    background:
-        linear-gradient(
-            180deg,
-            #48ff18,
-            #18bd00
-        );
-
+    display: inline-block;
+    width: 82px;
+    padding: 9px 4px;
+    border-radius: 9px;
+    background: #159b68;
     color: white;
-
-    font-size: 20px;
-
+    text-decoration: none;
+    font-size: 12px;
     font-weight: bold;
-
-    box-shadow:
-        0 0 14px rgba(57,255,20,.45);
 }
 
-
-/* META */
-
-.game-meta {
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
-
-    gap: 12px;
-
-    font-size: 18px;
-    font-weight: 600;
-
-    white-space: nowrap;
+.game-rating {
+    margin-top: 8px;
+    font-size: 12px;
 }
 
-.star {
-    color: #ffd900;
-    font-size: 23px;
+.game-size {
+    margin-top: 4px;
+    font-size: 11px;
+    color: #c5ddd4;
 }
 
-.separator {
-    color: #aaa;
+/* NEW LAUNCH */
+
+#new-launch-section {
+    padding: 0 15px;
 }
 
+.new-launch-box {
+    margin-bottom: 15px;
+}
 
-/* MESSAGE */
+/* MESSAGES */
 
 .message {
     text-align: center;
-
-    padding: 35px 10px;
-
-    color: #aaa;
-
-    font-size: 18px;
+    padding: 30px 15px;
+    color: #c8ddd6;
+    font-size: 15px;
 }
 
+/* OWNER */
 
-/* =========================
-   MENU
-========================= */
-
-.menu-container {
-    position: fixed;
-
-    top: 12px;
-    left: 12px;
-
-    z-index: 9999;
+.owner {
+    text-align: center;
+    padding: 10px 15px 25px;
+    color: #9bbdb0;
+    font-size: 12px;
 }
 
-.menu-btn {
-    width: 42px;
-    height: 42px;
+/* MOBILE */
 
-    border: 1px solid #39ff14;
+@media (max-width: 400px) {
 
-    border-radius: 50%;
-
-    background: #063b16;
-
-    color: white;
-
-    font-size: 28px;
-
-    cursor: pointer;
-}
-
-.menu-box {
-    display: none;
-
-    position: absolute;
-
-    top: 48px;
-    left: 0;
-
-    width: 170px;
-
-    padding: 8px;
-
-    background: #063b16;
-
-    border: 1px solid #39ff14;
-
-    border-radius: 12px;
-}
-
-.menu-box.show {
-    display: block;
-}
-
-.menu-box a {
-    display: block;
-
-    padding: 12px 10px;
-
-    color: white;
-
-    text-decoration: none;
-}
-
-
-/* =========================
-   MOBILE
-========================= */
-
-@media (max-width:700px) {
-
-    .header {
-        padding: 16px 12px 8px;
+    .game-card {
+        grid-template-columns: 68px 1fr 76px;
+        gap: 8px;
     }
 
-    .header h1 {
-        font-size: 24px;
+    .game-logo {
+        width: 68px;
+        height: 68px;
     }
 
-    .tagline {
-        font-size: 12px;
-        line-height: 1.4;
+    .download-btn {
+        width: 76px;
     }
 
-    .search-box {
-        width: calc(100% - 16px);
-        height: 50px;
-        border-radius: 14px;
-    }
-
-    .category-buttons {
-        width: calc(100% - 16px);
-        border-radius: 16px;
-    }
-
-    .category-btn {
-        height: 42px;
-        font-size: 13px;
-    }
-
-    .others-title {
-        font-size: 16px;
-    }
-
-    .banner-section {
-        width: calc(100% - 16px);
-        border-radius: 12px;
-        margin-bottom: 15px;
-    }
-
-    .telegram-section {
-        width: calc(100% - 16px);
-    }
-
-    .telegram-title {
-        font-size: 16px;
-    }
-
-    .telegram-btn {
-        min-height: 45px;
+    .game-name {
         font-size: 15px;
-        border-radius: 10px;
     }
 
-    .category-heading {
-        font-size: 16px;
-    }
-
-    .new-launch-title {
-        font-size: 16px;
-    }
-
-    .game-card {
-        min-height: 78px;
-
-        grid-template-columns:
-            42px
-            minmax(0,1fr)
-            72px;
-
-        gap: 6px;
-
-        padding: 6px;
-
-        border-radius: 10px;
-
-        margin-bottom: 8px;
-    }
-
-    .game-logo {
-        width: 42px;
-        height: 42px;
-
-        border-radius: 8px;
-
-        font-size: 17px;
-    }
-
-    .game-name {
-        font-size: 14px;
-        margin-bottom: 3px;
-    }
-
-    .signup {
-        font-size: 10px;
-        margin-bottom: 2px;
-    }
-
-    .withdraw {
-        font-size: 10px;
-    }
-
-    .game-action {
-        gap: 4px;
-    }
-
-    .download-btn {
-        min-height: 28px;
-        font-size: 10px;
-        padding: 4px 3px;
-        border-radius: 7px;
-    }
-
-    .game-meta {
-        font-size: 8px;
-        gap: 3px;
-    }
-
-    .star {
-        font-size: 9px;
-    }
-}
-
-
-/* SMALL MOBILE */
-
-@media (max-width:380px) {
-
-    .game-card {
-        grid-template-columns:
-            38px
-            minmax(0,1fr)
-            65px;
-
-        gap: 5px;
-        padding: 5px;
-    }
-
-    .game-logo {
-        width: 38px;
-        height: 38px;
-    }
-
-    .game-name {
-        font-size: 12px;
-    }
-
-    .signup {
-        font-size: 8px;
-    }
-
-    .withdraw {
-        font-size: 8px;
-    }
-
-    .download-btn {
-        min-height: 24px;
-        font-size: 9px;
-    }
-
-    .game-meta {
-        font-size: 7px;
-    }
 }
 
 </style>
 </head>
 
-
 <body>
-
-
-<!-- MENU -->
-
-<div class="menu-container">
-
-    <button
-        id="menu-btn"
-        class="menu-btn"
-        type="button"
-    >
-        ⋮
-    </button>
-
-    <div
-        id="menu-box"
-        class="menu-box"
-    >
-
-        <a href="#" target="_blank">
-            💬 WhatsApp
-        </a>
-
-        <a href="#" target="_blank">
-            ✈️ Telegram
-        </a>
-
-    </div>
-
-</div>
-
 
 <!-- HEADER -->
 
 <div class="header">
 
-    <h1>
-        🎮 YONO GAMES
-    </h1>
+    <div class="logo">
+        YONO GAMES
+    </div>
 
-    <p class="tagline">
-        YOUR ONE-STOP DESTINATION TO DISCOVER TOP ONLINE GAMES,
-        EXCITING OFFERS, RATINGS, AND TRUSTED GAMING PLATFORMS.
-    </p>
+    <div class="menu-btn" id="menu-btn">
+        ☰
+    </div>
 
 </div>
 
+<!-- MENU -->
+
+<div class="menu" id="menu">
+
+    <a href="#">Home</a>
+    <a href="#">Contact</a>
+    <a href="#">Privacy Policy</a>
+
+</div>
 
 <!-- SEARCH -->
 
 <div class="search-box">
 
     <input
-        id="search"
         type="text"
-        placeholder="🔍 Search games..."
-        autocomplete="off"
+        id="search-input"
+        placeholder="Search games..."
     >
 
 </div>
 
-
-<!-- CATEGORY -->
+<!-- CATEGORY BUTTONS -->
 
 <div class="category-buttons">
 
-    <button
-        id="yono-btn"
-        class="category-btn active"
-        type="button"
-    >
-        🎮 YONO GAMES
+    <button id="yono-btn" class="active">
+        YONO GAMES
     </button>
 
-    <button
-        id="others-btn"
-        class="category-btn"
-        type="button"
-    >
-        🎮 OTHERS GAMES
+    <button id="others-btn">
+        OTHERS GAMES
     </button>
 
 </div>
 
 
-<!-- =========================
-     OTHERS ONLY
-========================= -->
+<!-- ================================================= -->
+<!-- OTHERS ONLY FEATURES                              -->
+<!-- ================================================= -->
 
 <div id="others-extra">
 
@@ -883,49 +385,41 @@ body {
     </div>
 
 
-    <!-- BANNER -->
+    <!-- AUTO SLIDER -->
 
     <div class="banner-section">
 
-        <div
-            id="banner-slider"
-            class="banner-slider"
-        >
+        <div class="banner-track" id="banner-track">
 
-            <div class="banner-slide">
-                <img
-                    src="banner1.jpg"
-                    alt="Banner 1"
-                >
-            </div>
+            <img
+                class="banner-slide"
+                src="banner1.jpg"
+                alt="Banner 1"
+            >
 
-            <div class="banner-slide">
-                <img
-                    src="banner2.jpg"
-                    alt="Banner 2"
-                >
-            </div>
+            <img
+                class="banner-slide"
+                src="banner2.jpg"
+                alt="Banner 2"
+            >
 
-            <div class="banner-slide">
-                <img
-                    src="banner3.jpg"
-                    alt="Banner 3"
-                >
-            </div>
+            <img
+                class="banner-slide"
+                src="banner3.jpg"
+                alt="Banner 3"
+            >
 
-            <div class="banner-slide">
-                <img
-                    src="banner4.jpg"
-                    alt="Banner 4"
-                >
-            </div>
+            <img
+                class="banner-slide"
+                src="banner4.jpg"
+                alt="Banner 4"
+            >
 
-            <div class="banner-slide">
-                <img
-                    src="banner5.jpg"
-                    alt="Banner 5"
-                >
-            </div>
+            <img
+                class="banner-slide"
+                src="banner5.jpg"
+                alt="Banner 5"
+            >
 
         </div>
 
@@ -944,9 +438,8 @@ body {
             class="telegram-btn"
             href="#"
             target="_blank"
-            rel="noopener noreferrer"
         >
-            ✈️ JOIN TELEGRAM
+            JOIN TELEGRAM
         </a>
 
     </div>
@@ -961,42 +454,45 @@ body {
 </div>
 
 
-<!-- =========================
-     NEW LAUNCH
-========================= -->
+<!-- ================================================= -->
+<!-- NEW LAUNCH                                         -->
+<!-- ================================================= -->
 
-<div
-    id="new-launch-section"
-    class="new-launch-section"
->
+<div id="new-launch-section">
 
     <div class="new-launch-title">
-        🎮 NEW LAUNCH
+        NEW LAUNCH
     </div>
 
-    <div id="new-launch-card"></div>
+    <div
+        id="new-launch-card"
+        class="new-launch-box"
+    ></div>
 
 </div>
 
 
-<!-- =========================
-     GAMES
-========================= -->
+<!-- ================================================= -->
+<!-- GAME LIST                                          -->
+<!-- ================================================= -->
 
 <div id="game-list">
 
     <div class="message">
-        WAIT A FEW MINUTES FOR YOUR GAMES
+        Loading games...
     </div>
 
+</div>
+
+
+<div class="owner">
+    YONO GAMES
 </div>
 
 
 <!-- SUPABASE -->
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-<!-- SCRIPT -->
 
 <script src="script.js"></script>
 
