@@ -23,6 +23,9 @@ const yonoButton =
 const othersButton =
     document.getElementById("others-btn");
 
+const othersExtra =
+    document.getElementById("others-extra");
+
 
 /* =========================
    VARIABLES
@@ -67,22 +70,13 @@ if (!window.supabase) {
 
 } else {
 
-
-    /* =========================
-       SUPABASE URL
-    ========================= */
-
     const SUPABASE_URL =
         "https://srbvlfjthbkdixlwlcvz.supabase.co";
 
 
-    /* =========================
-       SUPABASE KEY
-    ========================= */
-
     /*
-       Yaha apni Supabase
-       Publishable / Anon key paste karo.
+       Apni Supabase Publishable / Anon key
+       yaha paste karo.
     */
 
     const SUPABASE_KEY =
@@ -154,8 +148,8 @@ if (!window.supabase) {
 
 
         /*
-           playstore_link column
-           se exact link.
+           playstore_link me jo exact URL hai,
+           wahi open hoga.
         */
 
         const gameLink =
@@ -218,14 +212,11 @@ if (!window.supabase) {
                     No Link
                 </a>
             `;
-
         }
 
 
         const card =
-            document.createElement(
-                "div"
-            );
+            document.createElement("div");
 
 
         card.className =
@@ -235,9 +226,7 @@ if (!window.supabase) {
         card.innerHTML = `
 
             <div class="game-logo">
-
                 ${logoHTML}
-
             </div>
 
 
@@ -247,12 +236,10 @@ if (!window.supabase) {
                     ${gameName}
                 </div>
 
-
                 <div class="signup">
                     Sign Up Bonus:
                     ${signupBonus}
                 </div>
-
 
                 <div class="withdraw">
                     Minimum Withdrawal:
@@ -266,7 +253,6 @@ if (!window.supabase) {
 
                 ${buttonHTML}
 
-
                 <div class="game-meta">
 
                     <span>
@@ -279,11 +265,9 @@ if (!window.supabase) {
 
                     </span>
 
-
                     <span class="separator">
                         |
                     </span>
-
 
                     <span>
                         ${size}
@@ -292,7 +276,6 @@ if (!window.supabase) {
                 </div>
 
             </div>
-
         `;
 
 
@@ -304,7 +287,7 @@ if (!window.supabase) {
        NEW LAUNCH
     ========================= */
 
-    function showNewLaunch() {
+    function showNewLaunch(category) {
 
         if (
             !newLaunchSection ||
@@ -315,39 +298,50 @@ if (!window.supabase) {
 
 
         /*
-           Agar is_new_launch column
-           available hai aur true hai,
-           to woh game New Launch mein
-           show hogi.
-
-           Agar column available nahi hai,
-           to latest game show hogi.
+           New Launch ko selected category
+           ke hisaab se rakhenge.
         */
 
+        const categoryGames =
+            allGames.filter(game => {
+
+                const gameCategory =
+                    String(
+                        game.category || ""
+                    )
+                    .trim()
+                    .toLowerCase();
+
+                return (
+                    gameCategory === category
+                );
+            });
+
+
         let newLaunchGame =
-            allGames.find(
+            categoryGames.find(
                 game =>
                     game.is_new_launch === true
             );
 
 
         /*
-           Agar is_new_launch true nahi mila,
-           to first/latest visible game ko
-           New Launch mein show karo.
+           Agar is_new_launch column nahi hai
+           ya true game nahi mila,
+           to latest game show hoga.
         */
 
         if (!newLaunchGame) {
 
-            if (allGames.length > 0) {
+            if (
+                categoryGames.length > 0
+            ) {
 
                 newLaunchGame =
-                    allGames[
-                        allGames.length - 1
+                    categoryGames[
+                        categoryGames.length - 1
                     ];
-
             }
-
         }
 
 
@@ -366,16 +360,11 @@ if (!window.supabase) {
         }
 
 
-        const card =
+        newLaunchCard.appendChild(
             createGameCard(
                 newLaunchGame
-            );
-
-
-        newLaunchCard.appendChild(
-            card
+            )
         );
-
     }
 
 
@@ -422,11 +411,9 @@ if (!window.supabase) {
                     error
                 );
 
-
                 showMessage(
                     "Games load nahi ho rahe."
                 );
-
 
                 return;
             }
@@ -444,17 +431,6 @@ if (!window.supabase) {
             );
 
 
-            /*
-               New Launch
-            */
-
-            showNewLaunch();
-
-
-            /*
-               Category games
-            */
-
             showGames(
                 currentCategory
             );
@@ -467,13 +443,10 @@ if (!window.supabase) {
                 error
             );
 
-
             showMessage(
                 "Games load nahi ho rahe."
             );
-
         }
-
     }
 
 
@@ -487,66 +460,94 @@ if (!window.supabase) {
             category;
 
 
-        /* BUTTON */
+        /* =========================
+           BUTTON ACTIVE
+        ========================= */
 
         if (
             yonoButton &&
             othersButton
         ) {
 
-            yonoButton.classList
-                .remove("active");
+            yonoButton.classList.remove(
+                "active"
+            );
 
-            othersButton.classList
-                .remove("active");
+            othersButton.classList.remove(
+                "active"
+            );
 
 
             if (
                 category === "yono"
             ) {
 
-                yonoButton.classList
-                    .add("active");
+                yonoButton.classList.add(
+                    "active"
+                );
 
+            } else {
+
+                othersButton.classList.add(
+                    "active"
+                );
             }
+        }
 
+
+        /* =========================
+           OTHERS EXTRA SHOW/HIDE
+        ========================= */
+
+        if (othersExtra) {
 
             if (
                 category === "others"
             ) {
 
-                othersButton.classList
-                    .add("active");
+                othersExtra.style.display =
+                    "block";
 
+            } else {
+
+                othersExtra.style.display =
+                    "none";
             }
-
         }
 
 
-        /* FILTER */
+        /* =========================
+           NEW LAUNCH
+        ========================= */
+
+        showNewLaunch(
+            category
+        );
+
+
+        /* =========================
+           FILTER
+        ========================= */
 
         const games =
-            allGames.filter(
-                game => {
+            allGames.filter(game => {
 
-                    const gameCategory =
-                        String(
-                            game.category || ""
-                        )
-                        .trim()
-                        .toLowerCase();
+                const gameCategory =
+                    String(
+                        game.category || ""
+                    )
+                    .trim()
+                    .toLowerCase();
 
-
-                    return (
-                        gameCategory ===
-                        category
-                    );
-
-                }
-            );
+                return (
+                    gameCategory === category
+                );
+            });
 
 
-        /* EMPTY */
+        /* =========================
+           EMPTY
+        ========================= */
 
         if (
             games.length === 0
@@ -560,28 +561,29 @@ if (!window.supabase) {
         }
 
 
-        /* CLEAR */
+        /* =========================
+           CLEAR
+        ========================= */
 
         gameList.innerHTML = "";
 
 
-        /* SHOW */
+        /* =========================
+           SHOW
+        ========================= */
 
-        games.forEach(
-            game => {
+        games.forEach(game => {
 
-                gameList.appendChild(
-                    createGameCard(game)
-                );
+            gameList.appendChild(
+                createGameCard(game)
+            );
 
-            }
-        );
-
+        });
     }
 
 
     /* =========================
-       YONO
+       YONO BUTTON
     ========================= */
 
     if (yonoButton) {
@@ -594,12 +596,11 @@ if (!window.supabase) {
 
             }
         );
-
     }
 
 
     /* =========================
-       OTHERS
+       OTHERS BUTTON
     ========================= */
 
     if (othersButton) {
@@ -612,7 +613,6 @@ if (!window.supabase) {
 
             }
         );
-
     }
 
 
@@ -632,47 +632,33 @@ if (!window.supabase) {
                         .toLowerCase();
 
 
-                if (!searchText) {
-
-                    showGames(
-                        currentCategory
-                    );
-
-                    return;
-
-                }
-
-
                 const games =
-                    allGames.filter(
-                        game => {
+                    allGames.filter(game => {
 
-                            const category =
-                                String(
-                                    game.category || ""
-                                )
-                                .trim()
-                                .toLowerCase();
-
-
-                            const name =
-                                String(
-                                    game.name || ""
-                                )
-                                .toLowerCase();
+                        const category =
+                            String(
+                                game.category || ""
+                            )
+                            .trim()
+                            .toLowerCase();
 
 
-                            return (
-                                category ===
-                                currentCategory
-                                &&
-                                name.includes(
-                                    searchText
-                                )
-                            );
+                        const name =
+                            String(
+                                game.name || ""
+                            )
+                            .toLowerCase();
 
-                        }
-                    );
+
+                        return (
+                            category ===
+                            currentCategory
+                            &&
+                            name.includes(
+                                searchText
+                            )
+                        );
+                    });
 
 
                 if (
@@ -690,19 +676,16 @@ if (!window.supabase) {
                 gameList.innerHTML = "";
 
 
-                games.forEach(
-                    game => {
+                games.forEach(game => {
 
-                        gameList.appendChild(
-                            createGameCard(game)
-                        );
+                    gameList.appendChild(
+                        createGameCard(game)
+                    );
 
-                    }
-                );
+                });
 
             }
         );
-
     }
 
 
@@ -711,7 +694,6 @@ if (!window.supabase) {
     ========================= */
 
     loadGames();
-
 }
 
 
@@ -744,7 +726,6 @@ if (
             menuBox.classList.toggle(
                 "show"
             );
-
         }
     );
 
@@ -763,12 +744,9 @@ if (
                 menuBox.classList.remove(
                     "show"
                 );
-
             }
-
         }
     );
-
 }
 
 
@@ -798,13 +776,21 @@ if (bannerSlider) {
         setInterval(
             function () {
 
+                /*
+                   Agar OTHERS visible nahi hai,
+                   slider move nahi karega.
+                */
+
+                if (
+                    currentCategory !==
+                    "others"
+                ) {
+                    return;
+                }
+
+
                 bannerIndex++;
 
-
-                /*
-                   Last ke baad first par
-                   wapas.
-                */
 
                 if (
                     bannerIndex >=
@@ -812,24 +798,16 @@ if (bannerSlider) {
                 ) {
 
                     bannerIndex = 0;
-
                 }
 
-
-                /*
-                   LEFT direction slide
-                */
 
                 bannerSlider.style.transform =
                     `translateX(-${
                         bannerIndex * 100
                     }%)`;
 
-
             },
             4000
         );
-
     }
-
-}
+           }
