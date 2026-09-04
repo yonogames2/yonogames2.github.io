@@ -1,813 +1,547 @@
-console.log("script.js started");
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-/* =========================
-   ELEMENTS
-========================= */
+<title>YONO GAMES</title>
 
-const gameList =
-    document.getElementById("game-list");
+<style>
 
-const newLaunchSection =
-    document.getElementById("new-launch-section");
+* {
+    box-sizing: border-box;
+}
 
-const newLaunchCard =
-    document.getElementById("new-launch-card");
+html,
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background:
+        radial-gradient(circle at top, #08704b 0%, #03251a 45%, #01150e 100%);
+    color: white;
+    min-height: 100%;
+}
 
-const searchInput =
-    document.getElementById("search");
+body {
+    padding-bottom: 30px;
+}
 
-const yonoButton =
-    document.getElementById("yono-btn");
+/* HEADER */
 
-const othersButton =
-    document.getElementById("others-btn");
+.header {
+    width: 100%;
+    padding: 16px 14px;
+    text-align: center;
+    background: #063d2a;
+    border-bottom: 1px solid #0d7650;
+}
 
-const othersExtra =
-    document.getElementById("others-extra");
+.header h1 {
+    margin: 0;
+    font-size: 27px;
+    font-weight: 900;
+    letter-spacing: 1px;
+}
 
+/* MENU */
 
-/* =========================
-   VARIABLES
-========================= */
+.menu {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    padding: 10px;
+    background: #032c1e;
+}
 
-let allGames = [];
+.menu button {
+    border: none;
+    border-radius: 8px;
+    padding: 8px 13px;
+    background: #0b543b;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
 
-let currentCategory = "yono";
+/* SEARCH */
 
+.search-box {
+    padding: 12px;
+}
 
-/* =========================
-   MESSAGE
-========================= */
+.search-box input {
+    width: 100%;
+    padding: 13px 15px;
+    border-radius: 10px;
+    border: 1px solid #16865c;
+    outline: none;
+    background: #052f21;
+    color: white;
+    font-size: 15px;
+}
 
-function showMessage(message) {
+.search-box input::placeholder {
+    color: #9dbab0;
+}
 
-    if (!gameList) {
-        return;
+/* NEW LAUNCH */
+
+.new-launch-section {
+    padding: 5px 12px 12px;
+}
+
+.section-title {
+    text-align: center;
+    font-size: 19px;
+    font-weight: 900;
+    margin: 5px 0 10px;
+}
+
+.new-launch-card {
+    width: 100%;
+}
+
+/* CATEGORY BUTTONS */
+
+.category-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    padding: 0 12px 12px;
+}
+
+.category-buttons button {
+    border: none;
+    padding: 13px 8px;
+    border-radius: 9px;
+    background: #063d2a;
+    color: white;
+    font-size: 15px;
+    font-weight: 900;
+    border: 1px solid #0d7650;
+    cursor: pointer;
+}
+
+.category-buttons button.active {
+    background: #0b704d;
+    box-shadow: 0 0 10px rgba(0, 255, 150, 0.25);
+}
+
+/* CATEGORY HEADING */
+
+.category-heading {
+    text-align: center;
+    font-size: 18px;
+    font-weight: 900;
+    margin: 4px 12px 10px;
+}
+
+/* OTHERS EXTRA */
+
+#others-extra {
+    display: none;
+}
+
+/* BANNER */
+
+.banner-section {
+    width: calc(100% - 24px);
+    margin: 0 12px 14px;
+    aspect-ratio: 2.35 / 1;
+    overflow: hidden;
+    border-radius: 12px;
+    position: relative;
+    background: #021c13;
+    border: 1px solid #0d7650;
+}
+
+.banner-slider {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    transition: transform 0.7s ease-in-out;
+}
+
+.banner-slide {
+    min-width: 100%;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+/* TELEGRAM */
+
+.telegram-section {
+    text-align: center;
+    padding: 5px 12px 15px;
+}
+
+.telegram-title {
+    font-size: 18px;
+    font-weight: 900;
+    margin-bottom: 9px;
+}
+
+.telegram-button {
+    display: inline-block;
+    text-decoration: none;
+    background: #0b704d;
+    color: white;
+    padding: 11px 22px;
+    border-radius: 9px;
+    font-weight: 900;
+    border: 1px solid #159b69;
+}
+
+/* GAME LIST */
+
+#game-list {
+    padding: 0 12px;
+}
+
+/* GAME CARD */
+
+.game-card {
+    width: 100%;
+    min-height: 145px;
+    margin-bottom: 10px;
+    padding: 10px;
+
+    display: grid;
+    grid-template-columns: 74px 1fr 82px;
+    gap: 10px;
+    align-items: center;
+
+    background: linear-gradient(
+        135deg,
+        #0b543b,
+        #063d2a
+    );
+
+    border: 1px solid #0d7650;
+    border-radius: 12px;
+
+    box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+}
+
+/* LOGO */
+
+.game-logo {
+    width: 74px;
+    height: 74px;
+    border-radius: 14px;
+    object-fit: cover;
+    background: #022116;
+}
+
+/* GAME INFO */
+
+.game-info {
+    min-width: 0;
+}
+
+.game-name {
+    font-size: 17px;
+    font-weight: 900;
+    margin-bottom: 8px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.signup-bonus {
+    color: #ff4b4b;
+    font-size: 14px;
+    font-weight: 800;
+    margin-bottom: 6px;
+}
+
+.minimum-withdrawal {
+    color: white;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+/* DOWNLOAD */
+
+.download-area {
+    text-align: center;
+}
+
+.download-button {
+    display: inline-block;
+    width: 82px;
+    padding: 9px 4px;
+
+    background: #0b704d;
+    color: white;
+    text-decoration: none;
+
+    border-radius: 8px;
+    border: 1px solid #159b69;
+
+    font-size: 12px;
+    font-weight: 900;
+}
+
+.rating {
+    margin-top: 8px;
+    font-size: 12px;
+    font-weight: 800;
+}
+
+.size {
+    margin-top: 4px;
+    font-size: 11px;
+    color: #c8ddd5;
+}
+
+/* MESSAGE */
+
+.message {
+    text-align: center;
+    padding: 25px 10px;
+    color: #c8ddd5;
+    font-weight: bold;
+}
+
+/* OWNER */
+
+.owner {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 12px;
+    color: #91aaa1;
+}
+
+/* MOBILE */
+
+@media (max-width: 380px) {
+
+    .game-card {
+        grid-template-columns: 65px 1fr 76px;
+        gap: 7px;
+        padding: 8px;
     }
 
-    gameList.innerHTML = `
-        <div class="message">
-            ${message}
+    .game-logo {
+        width: 65px;
+        height: 65px;
+    }
+
+    .download-button {
+        width: 76px;
+    }
+
+    .game-name {
+        font-size: 15px;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+
+<div class="header">
+    <h1>YONO GAMES</h1>
+</div>
+
+<!-- MENU -->
+
+<div class="menu">
+
+    <button onclick="openMenu('home')">
+        HOME
+    </button>
+
+    <button onclick="openMenu('telegram')">
+        TELEGRAM
+    </button>
+
+    <button onclick="openMenu('contact')">
+        CONTACT
+    </button>
+
+</div>
+
+<!-- SEARCH -->
+
+<div class="search-box">
+    <input
+        type="text"
+        id="search-input"
+        placeholder="Search games..."
+        autocomplete="off"
+    >
+</div>
+
+<!-- NEW LAUNCH
+     SEARCH KE NICHE
+     YONO / OTHERS KE UPAR -->
+
+<section
+    id="new-launch-section"
+    class="new-launch-section"
+>
+
+    <div class="section-title">
+        🆕 NEW LAUNCH
+    </div>
+
+    <div
+        id="new-launch-card"
+        class="new-launch-card"
+    ></div>
+
+</section>
+
+<!-- YONO / OTHERS -->
+
+<div class="category-buttons">
+
+    <button
+        id="yono-btn"
+        class="active"
+        onclick="showGames('yono')"
+    >
+        YONO GAMES
+    </button>
+
+    <button
+        id="others-btn"
+        onclick="showGames('others')"
+    >
+        OTHERS GAMES
+    </button>
+
+</div>
+
+
+<!-- ========================= -->
+<!-- OTHERS CONTENT -->
+<!-- ========================= -->
+
+<div id="others-extra">
+
+    <div class="category-heading">
+        OTHERS GAMES
+    </div>
+
+    <!-- AUTO SLIDER -->
+
+    <div class="banner-section">
+
+        <div
+            id="banner-slider"
+            class="banner-slider"
+        >
+
+            <img
+                src="banner1.jpg"
+                class="banner-slide"
+                alt="Banner 1"
+            >
+
+            <img
+                src="banner2.jpg"
+                class="banner-slide"
+                alt="Banner 2"
+            >
+
+            <img
+                src="banner3.jpg"
+                class="banner-slide"
+                alt="Banner 3"
+            >
+
+            <img
+                src="banner4.jpg"
+                class="banner-slide"
+                alt="Banner 4"
+            >
+
+            <img
+                src="banner5.jpg"
+                class="banner-slide"
+                alt="Banner 5"
+            >
+
         </div>
-    `;
-}
 
+    </div>
 
-/* =========================
-   SUPABASE
-========================= */
 
-if (!window.supabase) {
+    <!-- TELEGRAM -->
 
-    console.error(
-        "Supabase library load nahi hui."
-    );
+    <div class="telegram-section">
 
-    showMessage(
-        "Supabase library load nahi hui."
-    );
+        <div class="telegram-title">
+            JOIN TELEGRAM
+        </div>
 
-} else {
+        <a
+            href="#"
+            class="telegram-button"
+            id="telegram-button"
+        >
+            JOIN TELEGRAM
+        </a>
 
-    const SUPABASE_URL =
-        "https://srbvlfjthbkdixlwlcvz.supabase.co";
+    </div>
 
 
-    /*
-       Apni Supabase Publishable / Anon key
-       yaha paste karo.
-    */
+    <!-- OTHERS DOWNLOAD TITLE -->
 
-    const SUPABASE_KEY =
-        "sb_publishable_-pF6ErKu9TUaxnrXodt0cg_HP9uEY9m";
+    <div class="category-heading">
+        DOWNLOAD NEW GAMES
+    </div>
 
+</div>
 
-    const supabaseClient =
-        window.supabase.createClient(
-            SUPABASE_URL,
-            SUPABASE_KEY
-        );
 
+<!-- ========================= -->
+<!-- YONO DOWNLOAD TITLE -->
+<!-- ========================= -->
 
-    /* =========================
-       ESCAPE HTML
-    ========================= */
+<div
+    id="yono-download-title"
+    class="category-heading"
+>
+    DOWNLOAD NEW YONO GAMES
+</div>
 
-    function escapeHTML(value) {
 
-        return String(value ?? "")
-            .replace(/&/g, "&amp;")
-            .replace(/</g, "&lt;")
-            .replace(/>/g, "&gt;")
-            .replace(/"/g, "&quot;")
-            .replace(/'/g, "&#039;");
-    }
+<!-- GAME LIST -->
 
+<div id="game-list">
 
-    /* =========================
-       GAME CARD
-    ========================= */
+    <div class="message">
+        Loading games...
+    </div>
 
-    function createGameCard(game) {
+</div>
 
-        const gameName =
-            escapeHTML(
-                game.name || "Game"
-            );
 
+<!-- OWNER -->
 
-        const logo =
-            String(
-                game.logo_url || ""
-            ).trim();
+<div class="owner">
+    © YONO GAMES
+</div>
 
 
-        const signupBonus =
-            escapeHTML(
-                game.signup_bonus || ""
-            );
+<!-- SUPABASE -->
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-        const minimumWithdrawal =
-            escapeHTML(
-                game.minimum_withdrawal || ""
-            );
+<!-- YOUR JS -->
 
+<script src="script.js"></script>
 
-        const rating =
-            escapeHTML(
-                game.rating ?? ""
-            );
-
-
-        const size =
-            escapeHTML(
-                game.size_mb || ""
-            );
-
-
-        /*
-           playstore_link me jo exact URL hai,
-           wahi open hoga.
-        */
-
-        const gameLink =
-            String(
-                game.playstore_link || ""
-            ).trim();
-
-
-        const validLink =
-            /^https?:\/\//i.test(
-                gameLink
-            );
-
-
-        let logoHTML = "🎮";
-
-
-        if (
-            /^https?:\/\//i.test(logo)
-        ) {
-
-            logoHTML = `
-                <img
-                    src="${escapeHTML(logo)}"
-                    alt="${gameName}"
-                    loading="lazy"
-                >
-            `;
-        }
-
-
-        let buttonHTML;
-
-
-        if (validLink) {
-
-            buttonHTML = `
-                <a
-                    class="download-btn"
-                    href="${escapeHTML(gameLink)}"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    Download
-                </a>
-            `;
-
-        } else {
-
-            buttonHTML = `
-                <a
-                    class="download-btn"
-                    href="#"
-                    onclick="return false;"
-                    style="
-                        opacity:.5;
-                        cursor:not-allowed;
-                    "
-                >
-                    No Link
-                </a>
-            `;
-        }
-
-
-        const card =
-            document.createElement("div");
-
-
-        card.className =
-            "game-card";
-
-
-        card.innerHTML = `
-
-            <div class="game-logo">
-                ${logoHTML}
-            </div>
-
-
-            <div class="game-info">
-
-                <div class="game-name">
-                    ${gameName}
-                </div>
-
-                <div class="signup">
-                    Sign Up Bonus:
-                    ${signupBonus}
-                </div>
-
-                <div class="withdraw">
-                    Minimum Withdrawal:
-                    ${minimumWithdrawal}
-                </div>
-
-            </div>
-
-
-            <div class="game-action">
-
-                ${buttonHTML}
-
-                <div class="game-meta">
-
-                    <span>
-
-                        <span class="star">
-                            ★
-                        </span>
-
-                        ${rating}
-
-                    </span>
-
-                    <span class="separator">
-                        |
-                    </span>
-
-                    <span>
-                        ${size}
-                    </span>
-
-                </div>
-
-            </div>
-        `;
-
-
-        return card;
-    }
-
-
-    /* =========================
-       NEW LAUNCH
-    ========================= */
-
-    function showNewLaunch(category) {
-
-        if (
-            !newLaunchSection ||
-            !newLaunchCard
-        ) {
-            return;
-        }
-
-
-        /*
-           New Launch ko selected category
-           ke hisaab se rakhenge.
-        */
-
-        const categoryGames =
-            allGames.filter(game => {
-
-                const gameCategory =
-                    String(
-                        game.category || ""
-                    )
-                    .trim()
-                    .toLowerCase();
-
-                return (
-                    gameCategory === category
-                );
-            });
-
-
-        let newLaunchGame =
-            categoryGames.find(
-                game =>
-                    game.is_new_launch === true
-            );
-
-
-        /*
-           Agar is_new_launch column nahi hai
-           ya true game nahi mila,
-           to latest game show hoga.
-        */
-
-        if (!newLaunchGame) {
-
-            if (
-                categoryGames.length > 0
-            ) {
-
-                newLaunchGame =
-                    categoryGames[
-                        categoryGames.length - 1
-                    ];
-            }
-        }
-
-
-        newLaunchCard.innerHTML = "";
-
-
-        if (!newLaunchGame) {
-
-            newLaunchCard.innerHTML = `
-                <div class="message">
-                    No new game available.
-                </div>
-            `;
-
-            return;
-        }
-
-
-        newLaunchCard.appendChild(
-            createGameCard(
-                newLaunchGame
-            )
-        );
-    }
-
-
-    /* =========================
-       LOAD GAMES
-    ========================= */
-
-    async function loadGames() {
-
-        showMessage(
-            "Loading games..."
-        );
-
-
-        try {
-
-            const {
-                data,
-                error
-            } =
-                await supabaseClient
-
-                    .from("Games")
-
-                    .select("*")
-
-                    .eq(
-                        "is_visible",
-                        true
-                    )
-
-                    .order(
-                        "id",
-                        {
-                            ascending: true
-                        }
-                    );
-
-
-            if (error) {
-
-                console.error(
-                    "Supabase Error:",
-                    error
-                );
-
-                showMessage(
-                    "Games load nahi ho rahe."
-                );
-
-                return;
-            }
-
-
-            allGames =
-                Array.isArray(data)
-                    ? data
-                    : [];
-
-
-            console.log(
-                "Games:",
-                allGames
-            );
-
-
-            showGames(
-                currentCategory
-            );
-
-        }
-
-        catch (error) {
-
-            console.error(
-                error
-            );
-
-            showMessage(
-                "Games load nahi ho rahe."
-            );
-        }
-    }
-
-
-    /* =========================
-       SHOW GAMES
-    ========================= */
-
-    function showGames(category) {
-
-        currentCategory =
-            category;
-
-
-        /* =========================
-           BUTTON ACTIVE
-        ========================= */
-
-        if (
-            yonoButton &&
-            othersButton
-        ) {
-
-            yonoButton.classList.remove(
-                "active"
-            );
-
-            othersButton.classList.remove(
-                "active"
-            );
-
-
-            if (
-                category === "yono"
-            ) {
-
-                yonoButton.classList.add(
-                    "active"
-                );
-
-            } else {
-
-                othersButton.classList.add(
-                    "active"
-                );
-            }
-        }
-
-
-        /* =========================
-           OTHERS EXTRA SHOW/HIDE
-        ========================= */
-
-        if (othersExtra) {
-
-            if (
-                category === "others"
-            ) {
-
-                othersExtra.style.display =
-                    "block";
-
-            } else {
-
-                othersExtra.style.display =
-                    "none";
-            }
-        }
-
-
-        /* =========================
-           NEW LAUNCH
-        ========================= */
-
-        showNewLaunch(
-            category
-        );
-
-
-        /* =========================
-           FILTER
-        ========================= */
-
-        const games =
-            allGames.filter(game => {
-
-                const gameCategory =
-                    String(
-                        game.category || ""
-                    )
-                    .trim()
-                    .toLowerCase();
-
-                return (
-                    gameCategory === category
-                );
-            });
-
-
-        /* =========================
-           EMPTY
-        ========================= */
-
-        if (
-            games.length === 0
-        ) {
-
-            showMessage(
-                "Is category me abhi koi game nahi hai."
-            );
-
-            return;
-        }
-
-
-        /* =========================
-           CLEAR
-        ========================= */
-
-        gameList.innerHTML = "";
-
-
-        /* =========================
-           SHOW
-        ========================= */
-
-        games.forEach(game => {
-
-            gameList.appendChild(
-                createGameCard(game)
-            );
-
-        });
-    }
-
-
-    /* =========================
-       YONO BUTTON
-    ========================= */
-
-    if (yonoButton) {
-
-        yonoButton.addEventListener(
-            "click",
-            function () {
-
-                showGames("yono");
-
-            }
-        );
-    }
-
-
-    /* =========================
-       OTHERS BUTTON
-    ========================= */
-
-    if (othersButton) {
-
-        othersButton.addEventListener(
-            "click",
-            function () {
-
-                showGames("others");
-
-            }
-        );
-    }
-
-
-    /* =========================
-       SEARCH
-    ========================= */
-
-    if (searchInput) {
-
-        searchInput.addEventListener(
-            "input",
-            function () {
-
-                const searchText =
-                    searchInput.value
-                        .trim()
-                        .toLowerCase();
-
-
-                const games =
-                    allGames.filter(game => {
-
-                        const category =
-                            String(
-                                game.category || ""
-                            )
-                            .trim()
-                            .toLowerCase();
-
-
-                        const name =
-                            String(
-                                game.name || ""
-                            )
-                            .toLowerCase();
-
-
-                        return (
-                            category ===
-                            currentCategory
-                            &&
-                            name.includes(
-                                searchText
-                            )
-                        );
-                    });
-
-
-                if (
-                    games.length === 0
-                ) {
-
-                    showMessage(
-                        "Game nahi mila."
-                    );
-
-                    return;
-                }
-
-
-                gameList.innerHTML = "";
-
-
-                games.forEach(game => {
-
-                    gameList.appendChild(
-                        createGameCard(game)
-                    );
-
-                });
-
-            }
-        );
-    }
-
-
-    /* =========================
-       START
-    ========================= */
-
-    loadGames();
-}
-
-
-/* =========================
-   MENU
-========================= */
-
-const menuBtn =
-    document.getElementById(
-        "menu-btn"
-    );
-
-const menuBox =
-    document.getElementById(
-        "menu-box"
-    );
-
-
-if (
-    menuBtn &&
-    menuBox
-) {
-
-    menuBtn.addEventListener(
-        "click",
-        function (event) {
-
-            event.stopPropagation();
-
-            menuBox.classList.toggle(
-                "show"
-            );
-        }
-    );
-
-
-    document.addEventListener(
-        "click",
-        function (event) {
-
-            if (
-                !menuBox.contains(
-                    event.target
-                ) &&
-                event.target !== menuBtn
-            ) {
-
-                menuBox.classList.remove(
-                    "show"
-                );
-            }
-        }
-    );
-}
-
-
-/* =========================
-   AUTO BANNER SLIDER
-========================= */
-
-const bannerSlider =
-    document.getElementById(
-        "banner-slider"
-    );
-
-
-let bannerIndex = 0;
-
-
-if (bannerSlider) {
-
-    const slides =
-        bannerSlider.querySelectorAll(
-            ".banner-slide"
-        );
-
-
-    if (slides.length > 1) {
-
-        setInterval(
-            function () {
-
-                /*
-                   Agar OTHERS visible nahi hai,
-                   slider move nahi karega.
-                */
-
-                if (
-                    currentCategory !==
-                    "others"
-                ) {
-                    return;
-                }
-
-
-                bannerIndex++;
-
-
-                if (
-                    bannerIndex >=
-                    slides.length
-                ) {
-
-                    bannerIndex = 0;
-                }
-
-
-                bannerSlider.style.transform =
-                    `translateX(-${
-                        bannerIndex * 100
-                    }%)`;
-
-            },
-            4000
-        );
-    }
-           }
+</body>
+</html>
