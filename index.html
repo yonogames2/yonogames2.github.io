@@ -37,11 +37,13 @@ body {
 }
 
 
-/* HEADER */
+/* =========================
+   HEADER
+========================= */
 
 .header {
     text-align: center;
-    padding: 18px 10px 12px;
+    padding: 18px 10px 10px;
 }
 
 .header h1 {
@@ -51,7 +53,7 @@ body {
     letter-spacing: 1px;
 }
 
-.header .tagline {
+.tagline {
     margin: 8px 10px 0;
     color: #9fffae;
     font-size: 14px;
@@ -59,74 +61,115 @@ body {
 }
 
 
-/* SEARCH */
+/* =========================
+   BANNER
+========================= */
 
-.search-box {
+.banner-section {
     width: calc(100% - 24px);
     max-width: 900px;
-    height: 62px;
 
     margin: 12px auto 18px;
 
-    border: 1px solid #39ff14;
-    border-radius: 20px;
+    overflow: hidden;
 
-    background: rgba(0, 45, 10, .65);
+    aspect-ratio: 2.35 / 1;
+
+    border: 1px solid #39ff14;
+    border-radius: 16px;
+
+    background: #063b16;
 
     box-shadow:
-        0 0 12px rgba(57,255,20,.25);
-
-    display: flex;
-    align-items: center;
-
-    padding: 0 20px;
+        0 0 15px rgba(57,255,20,.25);
 }
 
-.search-box input {
+.banner-slider {
+    display: flex;
+
     width: 100%;
     height: 100%;
 
-    border: none;
-    outline: none;
-
-    background: transparent;
-    color: white;
-
-    font-size: 18px;
+    transition:
+        transform .7s ease-in-out;
 }
 
-.search-box input::placeholder {
-    color: #aaa;
+.banner-slide {
+    flex: 0 0 100%;
+
+    width: 100%;
+    height: 100%;
+}
+
+.banner-slide img {
+    width: 100%;
+    height: 100%;
+
+    display: block;
+
+    object-fit: cover;
 }
 
 
-/* NEW LAUNCH */
+/* =========================
+   TELEGRAM
+========================= */
 
-.new-launch-section {
-    width: calc(100% - 16px);
+.telegram-section {
+    width: calc(100% - 24px);
     max-width: 900px;
 
-    margin: 0 auto 18px;
+    margin: 0 auto 20px;
+
+    text-align: center;
 }
 
-.new-launch-title {
-    text-align: center;
-
+.telegram-title {
     font-size: 20px;
     font-weight: 800;
-
-    letter-spacing: 1px;
-
-    color: white;
 
     margin-bottom: 10px;
 }
 
-#new-launch-card {
+.telegram-btn {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
     width: 100%;
+    min-height: 52px;
+
+    border-radius: 14px;
+
+    background:
+        linear-gradient(
+            180deg,
+            #39ff14,
+            #16b900
+        );
+
+    color: white;
+
+    text-decoration: none;
+
+    font-size: 18px;
+    font-weight: 800;
+
+    box-shadow:
+        0 0 14px rgba(57,255,20,.40);
+
+    transition: .15s;
 }
-    
-/* CATEGORY HEADING */
+
+.telegram-btn:active {
+    transform: scale(.98);
+}
+
+
+/* =========================
+   DOWNLOAD NEW GAMES
+========================= */
 
 .category-heading {
     width: calc(100% - 24px);
@@ -138,21 +181,64 @@ body {
 
     color: white;
 
-    font-size: 19px;
+    font-size: 20px;
     font-weight: 800;
 
     letter-spacing: .5px;
-    }
+}
 
-    
-/* CATEGORY BUTTONS */
+
+/* =========================
+   SEARCH
+========================= */
+
+.search-box {
+    width: calc(100% - 24px);
+    max-width: 900px;
+
+    height: 58px;
+
+    margin: 0 auto 15px;
+
+    border: 1px solid #39ff14;
+    border-radius: 18px;
+
+    background: rgba(0,45,10,.65);
+
+    display: flex;
+
+    align-items: center;
+
+    padding: 0 18px;
+}
+
+.search-box input {
+    width: 100%;
+    height: 100%;
+
+    border: none;
+    outline: none;
+
+    background: transparent;
+
+    color: white;
+
+    font-size: 17px;
+}
+
+.search-box input::placeholder {
+    color: #aaa;
+}
+
+
+/* =========================
+   CATEGORY
+========================= */
 
 .category-buttons {
     display: grid;
 
     grid-template-columns: 1fr 1fr;
-
-    gap: 0;
 
     width: calc(100% - 24px);
     max-width: 900px;
@@ -164,13 +250,14 @@ body {
     border: 1px solid #39ff14;
     border-radius: 20px;
 
-    background: rgba(0, 35, 8, .35);
+    background: rgba(0,35,8,.35);
 }
 
 .category-btn {
     height: 48px;
 
     border: none;
+
     border-radius: 14px;
 
     background: transparent;
@@ -181,20 +268,7 @@ body {
     font-weight: 700;
 
     cursor: pointer;
-
-    transition: .2s;
 }
-
-.category-btn:hover {
-    background: rgba(20,180,0,.15);
-}
-
-.category-btn:active {
-    transform: scale(.98);
-}
-
-
-/* ACTIVE BUTTON */
 
 .category-btn.active {
     color: white;
@@ -211,7 +285,30 @@ body {
 }
 
 
-/* GAMES */
+/* =========================
+   NEW LAUNCH
+========================= */
+
+.new-launch-section {
+    width: calc(100% - 16px);
+    max-width: 900px;
+
+    margin: 0 auto 20px;
+}
+
+.new-launch-title {
+    text-align: center;
+
+    font-size: 20px;
+    font-weight: 800;
+
+    margin-bottom: 10px;
+}
+
+
+/* =========================
+   GAME LIST
+========================= */
 
 #game-list {
     width: calc(100% - 16px);
@@ -223,18 +320,22 @@ body {
 }
 
 
-/* GAME CARD */
+/* =========================
+   GAME CARD
+========================= */
 
 .game-card {
-    position: relative;
-
     display: grid;
 
-    grid-template-columns: 145px 1fr 250px;
+    grid-template-columns:
+        145px
+        1fr
+        250px;
 
     gap: 15px;
 
     width: 100%;
+
     min-height: 155px;
 
     margin-bottom: 15px;
@@ -253,8 +354,7 @@ body {
     border-radius: 20px;
 
     box-shadow:
-        0 0 10px rgba(57,255,20,.20),
-        inset 0 0 18px rgba(0,255,40,.04);
+        0 0 10px rgba(57,255,20,.20);
 
     align-items: center;
 }
@@ -290,12 +390,13 @@ body {
 }
 
 
-/* GAME INFO */
+/* INFO */
 
 .game-info {
     min-width: 0;
 
     display: flex;
+
     flex-direction: column;
 
     justify-content: center;
@@ -303,12 +404,15 @@ body {
 
 .game-name {
     font-size: 26px;
+
     font-weight: bold;
 
     margin-bottom: 12px;
 
     white-space: nowrap;
+
     overflow: hidden;
+
     text-overflow: ellipsis;
 }
 
@@ -316,6 +420,7 @@ body {
     color: #ff5b5b;
 
     font-size: 18px;
+
     font-weight: 700;
 
     margin-bottom: 7px;
@@ -325,28 +430,25 @@ body {
     color: white;
 
     font-size: 18px;
+
     font-weight: 600;
 }
 
 
-/* DOWNLOAD SIDE */
+/* ACTION */
 
 .game-action {
     display: flex;
 
     flex-direction: column;
 
-    align-items: stretch;
-
     justify-content: center;
 
     gap: 10px;
-
-    min-width: 0;
 }
 
 
-/* DOWNLOAD BUTTON */
+/* DOWNLOAD */
 
 .download-btn {
     min-height: 58px;
@@ -354,6 +456,7 @@ body {
     display: flex;
 
     align-items: center;
+
     justify-content: center;
 
     width: 100%;
@@ -372,29 +475,21 @@ body {
     color: white;
 
     font-size: 20px;
+
     font-weight: bold;
 
     box-shadow:
         0 0 14px rgba(57,255,20,.45);
-
-    transition: .15s;
-}
-
-.download-btn:hover {
-    filter: brightness(1.08);
-}
-
-.download-btn:active {
-    transform: scale(.98);
 }
 
 
-/* RATING + SIZE */
+/* META */
 
 .game-meta {
     display: flex;
 
     align-items: center;
+
     justify-content: center;
 
     gap: 12px;
@@ -403,19 +498,16 @@ body {
 
     font-weight: 600;
 
-    color: #fff;
-
-    text-align: center;
-
     white-space: nowrap;
 }
 
-.game-meta .star {
+.star {
     color: #ffd900;
+
     font-size: 23px;
 }
 
-.game-meta .separator {
+.separator {
     color: #aaa;
 }
 
@@ -433,213 +525,9 @@ body {
 }
 
 
-/* MOBILE */
-
-@media (max-width: 700px) {
-
-    .header {
-        padding: 16px 12px 8px;
-    }
-
-    .header h1 {
-        font-size: 24px;
-    }
-
-    .header .tagline {
-        font-size: 12px;
-        line-height: 1.4;
-    }
-
-    .search-box {
-        height: 62px;
-
-        margin-top: 15px;
-
-        border-radius: 20px;
-
-        padding: 0 16px;
-    }
-
-    .search-box input {
-        font-size: 18px;
-    }
-
-    /* NEW LAUNCH MOBILE */
-
-    .new-launch-section {
-        margin-bottom: 14px;
-    }
-
-    .new-launch-title {
-        font-size: 16px;
-        margin-bottom: 8px;
-    }
-
-    .category-buttons {
-        border-radius: 20px;
-    }
-
-    .category-btn {
-        font-size: 14px;
-        padding: 13px 3px;
-    }
-
-
-    /* MOBILE GAME CARD */
-
-    .game-card {
-        min-height: 78px;
-
-        grid-template-columns: 42px minmax(0, 1fr) 72px;
-
-        gap: 6px;
-
-        padding: 6px;
-
-        border-radius: 10px;
-
-        margin-bottom: 8px;
-    }
-
-
-    /* MOBILE LOGO */
-
-    .game-logo {
-        width: 42px;
-        height: 42px;
-
-        border-radius: 8px;
-
-        font-size: 17px;
-    }
-
-
-    /* MOBILE INFO */
-
-    .game-name {
-        font-size: 14px;
-
-        margin-bottom: 3px;
-    }
-
-    .signup {
-        font-size: 10px;
-
-        margin-bottom: 2px;
-    }
-
-    .withdraw {
-        font-size: 10px;
-    }
-
-
-    /* MOBILE DOWNLOAD */
-
-    .game-action {
-        gap: 4px;
-    }
-
-    .download-btn {
-        min-height: 28px;
-
-        width: 100%;
-
-        font-size: 10px;
-
-        padding: 4px 3px;
-
-        border-radius: 7px;
-    }
-
-
-    /* MOBILE META */
-
-    .game-meta {
-        font-size: 8px;
-
-        gap: 3px;
-    }
-
-    .game-meta .star {
-        font-size: 9px;
-    }
-}
-
-
-/* SMALL MOBILE */
-
-@media (max-width: 380px) {
-
-    .game-card {
-        min-height: 72px;
-
-        grid-template-columns: 38px minmax(0, 1fr) 65px;
-
-        gap: 5px;
-
-        padding: 5px;
-
-        border-radius: 8px;
-
-        margin-bottom: 7px;
-    }
-
-
-    .game-logo {
-        width: 38px;
-        height: 38px;
-
-        border-radius: 7px;
-
-        font-size: 15px;
-    }
-
-
-    .game-name {
-        font-size: 12px;
-
-        margin-bottom: 2px;
-    }
-
-    .signup {
-        font-size: 8px;
-
-        margin-bottom: 1px;
-    }
-
-    .withdraw {
-        font-size: 8px;
-    }
-
-
-    .game-action {
-        gap: 3px;
-    }
-
-    .download-btn {
-        min-height: 24px;
-
-        font-size: 9px;
-
-        padding: 3px 2px;
-
-        border-radius: 6px;
-    }
-
-
-    .game-meta {
-        font-size: 7px;
-
-        gap: 2px;
-    }
-
-    .game-meta .star {
-        font-size: 8px;
-    }
-}
-
-
-/* MENU */
+/* =========================
+   MENU
+========================= */
 
 .menu-container {
     position: fixed;
@@ -664,8 +552,6 @@ body {
 
     font-size: 28px;
 
-    line-height: 1;
-
     cursor: pointer;
 }
 
@@ -686,9 +572,10 @@ body {
     border: 1px solid #39ff14;
 
     border-radius: 12px;
+}
 
-    box-shadow:
-        0 0 12px rgba(57,255,20,.35);
+.menu-box.show {
+    display: block;
 }
 
 .menu-box a {
@@ -699,18 +586,203 @@ body {
     color: white;
 
     text-decoration: none;
-
-    font-size: 15px;
-
-    border-radius: 8px;
 }
 
-.menu-box a:hover {
-    background: rgba(57,255,20,.15);
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width:700px) {
+
+    .header {
+        padding: 16px 12px 8px;
+    }
+
+    .header h1 {
+        font-size: 24px;
+    }
+
+    .tagline {
+        font-size: 12px;
+        line-height: 1.4;
+    }
+
+
+    .banner-section {
+        width: calc(100% - 16px);
+
+        border-radius: 12px;
+
+        margin-bottom: 15px;
+    }
+
+
+    .telegram-section {
+        width: calc(100% - 16px);
+    }
+
+    .telegram-title {
+        font-size: 16px;
+    }
+
+    .telegram-btn {
+        min-height: 45px;
+
+        font-size: 15px;
+
+        border-radius: 10px;
+    }
+
+
+    .category-heading {
+        font-size: 16px;
+    }
+
+
+    .search-box {
+        width: calc(100% - 16px);
+
+        height: 50px;
+
+        border-radius: 14px;
+    }
+
+
+    .category-buttons {
+        width: calc(100% - 16px);
+
+        border-radius: 16px;
+    }
+
+    .category-btn {
+        height: 42px;
+
+        font-size: 13px;
+    }
+
+
+    .new-launch-title {
+        font-size: 16px;
+    }
+
+
+    .game-card {
+        min-height: 78px;
+
+        grid-template-columns:
+            42px
+            minmax(0,1fr)
+            72px;
+
+        gap: 6px;
+
+        padding: 6px;
+
+        border-radius: 10px;
+
+        margin-bottom: 8px;
+    }
+
+
+    .game-logo {
+        width: 42px;
+        height: 42px;
+
+        border-radius: 8px;
+
+        font-size: 17px;
+    }
+
+
+    .game-name {
+        font-size: 14px;
+
+        margin-bottom: 3px;
+    }
+
+    .signup {
+        font-size: 10px;
+
+        margin-bottom: 2px;
+    }
+
+    .withdraw {
+        font-size: 10px;
+    }
+
+
+    .game-action {
+        gap: 4px;
+    }
+
+
+    .download-btn {
+        min-height: 28px;
+
+        font-size: 10px;
+
+        padding: 4px 3px;
+
+        border-radius: 7px;
+    }
+
+
+    .game-meta {
+        font-size: 8px;
+
+        gap: 3px;
+    }
+
+    .star {
+        font-size: 9px;
+    }
+
 }
 
-.menu-box.show {
-    display: block;
+
+/* SMALL MOBILE */
+
+@media (max-width:380px) {
+
+    .game-card {
+        grid-template-columns:
+            38px
+            minmax(0,1fr)
+            65px;
+
+        gap: 5px;
+
+        padding: 5px;
+    }
+
+    .game-logo {
+        width: 38px;
+        height: 38px;
+    }
+
+    .game-name {
+        font-size: 12px;
+    }
+
+    .signup {
+        font-size: 8px;
+    }
+
+    .withdraw {
+        font-size: 8px;
+    }
+
+    .download-btn {
+        min-height: 24px;
+
+        font-size: 9px;
+    }
+
+    .game-meta {
+        font-size: 7px;
+    }
+
 }
 
 </style>
@@ -720,7 +792,9 @@ body {
 <body>
 
 
-<!-- 3 DOT MENU -->
+<!-- =========================
+     MENU
+========================= -->
 
 <div class="menu-container">
 
@@ -756,7 +830,9 @@ body {
 </div>
 
 
-<!-- HEADER -->
+<!-- =========================
+     HEADER
+========================= -->
 
 <div class="header">
 
@@ -772,13 +848,116 @@ body {
 </div>
 
 
+<!-- =========================
+     BANNER
+========================= -->
+
+<div class="banner-section">
+
+    <div
+        id="banner-slider"
+        class="banner-slider"
+    >
+
+        <!--
+        Yaha apni 5 banner photos ke URL
+        dal sakte ho.
+        -->
+
+        <div class="banner-slide">
+
+            <img
+                src="banner1.jpg"
+                alt="Banner 1"
+            >
+
+        </div>
+
+
+        <div class="banner-slide">
+
+            <img
+                src="banner2.jpg"
+                alt="Banner 2"
+            >
+
+        </div>
+
+
+        <div class="banner-slide">
+
+            <img
+                src="banner3.jpg"
+                alt="Banner 3"
+            >
+
+        </div>
+
+
+        <div class="banner-slide">
+
+            <img
+                src="banner4.jpg"
+                alt="Banner 4"
+            >
+
+        </div>
+
+
+        <div class="banner-slide">
+
+            <img
+                src="banner5.jpg"
+                alt="Banner 5"
+            >
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================
+     TELEGRAM
+========================= -->
+
+<div class="telegram-section">
+
+    <div class="telegram-title">
+        JOIN TELEGRAM
+    </div>
+
+    <a
+        class="telegram-btn"
+        href="#"
+        target="_blank"
+        rel="noopener noreferrer"
+    >
+        ✈️ JOIN TELEGRAM
+    </a>
+
+</div>
+
+
+<!-- =========================
+     DOWNLOAD NEW GAMES
+========================= -->
+
+<div class="category-heading">
+
+    DOWNLOAD NEW GAMES
+
+</div>
+
+
 <!-- SEARCH -->
 
 <div class="search-box">
 
     <input
-        type="text"
         id="search"
+        type="text"
         placeholder="🔍 Search games..."
         autocomplete="off"
     >
@@ -786,27 +965,7 @@ body {
 </div>
 
 
-<!-- NEW LAUNCH -->
-
-<div
-    id="new-launch-section"
-    class="new-launch-section"
-    style="display:none;"
->
-
-    <div class="new-launch-title">
-        🎮 NEW LAUNCH
-    </div>
-
-    <div id="new-launch-card"></div>
-
-</div>
-    
-    <div class="category-heading">
-    DOWNLOAD NEW YONO GAMES
-</div>
-
-<!-- CATEGORY BUTTONS -->
+<!-- CATEGORY -->
 
 <div class="category-buttons">
 
@@ -817,6 +976,7 @@ body {
     >
         🎮 YONO GAMES
     </button>
+
 
     <button
         id="others-btn"
@@ -829,7 +989,27 @@ body {
 </div>
 
 
-<!-- GAME LIST -->
+<!-- =========================
+     NEW LAUNCH
+========================= -->
+
+<div
+    id="new-launch-section"
+    class="new-launch-section"
+>
+
+    <div class="new-launch-title">
+        🎮 NEW LAUNCH
+    </div>
+
+    <div id="new-launch-card"></div>
+
+</div>
+
+
+<!-- =========================
+     GAMES
+========================= -->
 
 <div id="game-list">
 
@@ -845,7 +1025,7 @@ body {
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 
-<!-- JAVASCRIPT -->
+<!-- SCRIPT -->
 
 <script src="script.js"></script>
 
