@@ -80,7 +80,7 @@ if (!window.supabase) {
     */
 
     const SUPABASE_KEY =
-        "PASTE_YOUR_SUPABASE_KEY_HERE";
+        "sb_publishable_-pF6ErKu9TUaxnrXodt0cg_HP9uEY9m";
 
 
     const supabaseClient =
