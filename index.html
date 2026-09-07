@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>YONO GAMES - DEMO</title>
+<title>YONO GAMES</title>
 
 <style>
 
@@ -65,7 +65,6 @@ body {
 .search-box {
     width: calc(100% - 24px);
     max-width: 900px;
-
     height: 62px;
 
     margin: 12px auto 18px;
@@ -73,7 +72,7 @@ body {
     border: 1px solid #39ff14;
     border-radius: 20px;
 
-    background: rgba(0,45,10,.65);
+    background: rgba(0, 45, 10, .65);
 
     box-shadow:
         0 0 12px rgba(57,255,20,.25);
@@ -102,6 +101,33 @@ body {
 }
 
 
+/* NEW LAUNCH */
+
+.new-launch-section {
+    width: calc(100% - 16px);
+    max-width: 900px;
+
+    margin: 0 auto 18px;
+}
+
+.new-launch-title {
+    text-align: center;
+
+    font-size: 20px;
+    font-weight: 800;
+
+    letter-spacing: 1px;
+
+    color: white;
+
+    margin-bottom: 10px;
+}
+
+#new-launch-card {
+    width: 100%;
+}
+
+
 /* CATEGORY HEADING */
 
 .category-heading {
@@ -116,6 +142,8 @@ body {
 
     font-size: 19px;
     font-weight: 800;
+
+    letter-spacing: .5px;
 }
 
 
@@ -138,12 +166,10 @@ body {
     border: 1px solid #39ff14;
     border-radius: 20px;
 
-    background: rgba(0,35,8,.35);
+    background: rgba(0, 35, 8, .35);
 }
 
 .category-btn {
-    position: relative;
-
     height: 48px;
 
     border: none;
@@ -159,10 +185,6 @@ body {
     cursor: pointer;
 
     transition: .2s;
-
-    overflow: hidden;
-
-    isolation: isolate;
 }
 
 .category-btn:hover {
@@ -192,26 +214,920 @@ body {
 
 
 /* ================================================= */
-/* OTHERS RED MOVING LIGHT                          */
+/* OTHERS ONLY FEATURES */
 /* ================================================= */
 
-#others-btn::after {
+#others-extra {
+    display: none;
 
-    content: "";
+    width: calc(100% - 16px);
+    max-width: 900px;
 
-    position: absolute;
+    margin: 0 auto 18px;
+}
 
-    width: 12px;
-    height: 12px;
+
+/* OTHERS TITLE */
+
+.others-title {
+    text-align: center;
+
+    color: white;
+
+    font-size: 20px;
+    font-weight: 800;
+
+    letter-spacing: 1px;
+
+    margin: 0 0 10px;
+}
+
+
+/* 2.35 : 1 PHOTO SLIDER */
+
+.banner-section {
+    width: 100%;
+
+    aspect-ratio: 2.35 / 1;
+
+    overflow: hidden;
+
+    border: 1px solid #39ff14;
+    border-radius: 15px;
+
+    background: #002b10;
+
+    box-shadow:
+        0 0 12px rgba(57,255,20,.25);
+
+    margin-bottom: 16px;
+}
+
+.banner-track {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+
+    transition:
+        transform .6s ease-in-out;
+}
+
+.banner-slide {
+    min-width: 100%;
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    display: block;
+}
+
+
+/* JOIN TELEGRAM */
+
+.telegram-section {
+    text-align: center;
+
+    margin: 8px 0 18px;
+}
+
+.telegram-title {
+    color: white;
+
+    font-size: 19px;
+    font-weight: 800;
+
+    letter-spacing: .5px;
+
+    margin-bottom: 10px;
+}
+
+.telegram-btn {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    min-height: 48px;
+
+    padding: 10px 24px;
+
+    border-radius: 14px;
+
+    background:
+        linear-gradient(
+            180deg,
+            #49ff18,
+            #17bd00
+        );
+
+    color: white;
+
+    text-decoration: none;
+
+    font-size: 16px;
+    font-weight: 800;
+
+    box-shadow:
+        0 0 14px rgba(57,255,20,.45);
+}
+
+
+/* DOWNLOAD NEW GAMES */
+
+.others-download-title {
+    text-align: center;
+
+    color: white;
+
+    font-size: 19px;
+    font-weight: 800;
+
+    letter-spacing: .5px;
+
+    margin: 0 0 10px;
+}
+
+
+/* GAMES */
+
+#game-list {
+    width: calc(100% - 16px);
+    max-width: 900px;
+
+    margin: 0 auto;
+
+    padding-bottom: 30px;
+}
+
+
+/* GAME CARD */
+
+.game-card {
+    position: relative;
+
+    display: grid;
+
+    grid-template-columns: 145px 1fr 250px;
+
+    gap: 15px;
+
+    width: 100%;
+    min-height: 155px;
+
+    margin-bottom: 15px;
+
+    padding: 14px;
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(0,45,12,.96),
+            rgba(0,70,18,.65)
+        );
+
+    border: 1px solid #28e916;
+
+    border-radius: 20px;
+
+    box-shadow:
+        0 0 10px rgba(57,255,20,.20),
+        inset 0 0 18px rgba(0,255,40,.04);
+
+    align-items: center;
+}
+
+
+/* LOGO */
+
+.game-logo {
+    width: 130px;
+    height: 130px;
+
+    border: 1px solid rgba(100,255,80,.8);
+
+    border-radius: 18px;
+
+    background: #063b16;
+
+    overflow: hidden;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 45px;
+}
+
+.game-logo img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+}
+
+
+/* GAME INFO */
+
+.game-info {
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+
+    justify-content: center;
+}
+
+.game-name {
+    font-size: 26px;
+    font-weight: bold;
+
+    margin-bottom: 12px;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.signup {
+    color: #ff5b5b;
+
+    font-size: 18px;
+    font-weight: 700;
+
+    margin-bottom: 7px;
+}
+
+.withdraw {
+    color: white;
+
+    font-size: 18px;
+    font-weight: 600;
+}
+
+
+/* DOWNLOAD SIDE */
+
+.game-action {
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: stretch;
+
+    justify-content: center;
+
+    gap: 10px;
+
+    min-width: 0;
+}
+
+
+/* DOWNLOAD BUTTON */
+
+.download-btn {
+    min-height: 58px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+
+    border-radius: 14px;
+
+    text-decoration: none;
+
+    background:
+        linear-gradient(
+            180deg,
+            #48ff18,
+            #18bd00
+        );
+
+    color: white;
+
+    font-size: 20px;
+    font-weight: bold;
+
+    box-shadow:
+        0 0 14px rgba(57,255,20,.45);
+
+    transition: .15s;
+}
+
+.download-btn:hover {
+    filter: brightness(1.08);
+}
+
+.download-btn:active {
+    transform: scale(.98);
+}
+
+
+/* RATING + SIZE */
+
+.game-meta {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 12px;
+
+    font-size: 18px;
+
+    font-weight: 600;
+
+    color: #fff;
+
+    text-align: center;
+
+    white-space: nowrap;
+}
+
+.game-meta .star {
+    color: #ffd900;
+    font-size: 23px;
+}
+
+.game-meta .separator {
+    color: #aaa;
+}
+
+
+/* MESSAGE */
+
+.message {
+    text-align: center;
+
+    padding: 35px 10px;
+
+    color: #aaa;
+
+    font-size: 18px;
+}
+
+
+/* MOBILE */
+
+@media (max-width: 700px) {
+
+    .header {
+        padding: 16px 12px 8px;
+    }
+
+    .header h1 {
+        font-size: 24px;
+    }
+
+    .header .tagline {
+        font-size: 12px;
+        line-height: 1.4;
+    }
+
+    .search-box {
+        height: 62px;
+
+        margin-top: 15px;
+
+        border-radius: 20px;
+
+        padding: 0 16px;
+    }
+
+    .search-box input {
+        font-size: 18px;
+    }
+
+
+    /* NEW LAUNCH MOBILE */
+
+    .new-launch-section {
+        margin-bottom: 14px;
+    }
+
+    .new-launch-title {
+        font-size: 16px;
+        margin-bottom: 8px;
+    }
+
+
+    .category-buttons {
+        border-radius: 20px;
+    }
+
+    .category-btn {
+        font-size: 14px;
+        padding: 13px 3px;
+    }
+
+
+    /* OTHERS MOBILE */
+
+    #others-extra {
+        width: calc(100% - 16px);
+
+        margin-bottom: 14px;
+    }
+
+    .others-title {
+        font-size: 16px;
+
+        margin-bottom: 8px;
+    }
+
+    .banner-section {
+        border-radius: 10px;
+
+        margin-bottom: 12px;
+    }
+
+    .telegram-title {
+        font-size: 16px;
+
+        margin-bottom: 8px;
+    }
+
+    .telegram-btn {
+        min-height: 38px;
+
+        padding: 8px 18px;
+
+        border-radius: 10px;
+
+        font-size: 13px;
+    }
+
+    .others-download-title {
+        font-size: 16px;
+
+        margin-bottom: 8px;
+    }
+
+
+    /* MOBILE GAME CARD */
+
+    .game-card {
+        min-height: 78px;
+
+        grid-template-columns: 42px minmax(0, 1fr) 72px;
+
+        gap: 6px;
+
+        padding: 6px;
+
+        border-radius: 10px;
+
+        margin-bottom: 8px;
+    }
+
+
+    /* MOBILE LOGO */
+
+    .game-logo {
+        width: 42px;
+        height: 42px;
+
+        border-radius: 8px;
+
+        font-size: 17px;
+    }
+
+
+    /* MOBILE INFO */
+
+    .game-name {
+        font-size: 14px;
+
+        margin-bottom: 3px;
+    }
+
+    .signup {
+        font-size: 10px;
+
+        margin-bottom: 2px;
+    }
+
+    .withdraw {
+        font-size: 10px;
+    }
+
+
+    /* MOBILE DOWNLOAD */
+
+    .game-action {
+        gap: 4px;
+    }
+
+    .download-btn {
+        min-height: 28px;
+
+        width: 100%;
+
+        font-size: 10px;
+
+        padding: 4px 3px;
+
+        border-radius: 7px;
+    }
+
+
+    /* MOBILE META */
+
+    .game-meta {
+        font-size: 8px;
+
+        gap: 3px;
+    }
+
+    .game-meta .star {
+        font-size: 9px;
+    }
+}
+
+
+/* SMALL MOBILE */
+
+@media (max-width: 380px) {
+
+    .game-card {
+        min-height: 72px;
+
+        grid-template-columns: 38px minmax(0, 1fr) 65px;
+
+        gap: 5px;
+
+        padding: 5px;
+
+        border-radius: 8px;
+
+        margin-bottom: 7px;
+    }
+
+
+    .game-logo {
+        width: 38px;
+        height: 38px;
+
+        border-radius: 7px;
+
+        font-size: 15px;
+    }
+
+
+    .game-name {
+        font-size: 12px;
+
+        margin-bottom: 2px;
+    }
+
+    .signup {
+        font-size: 8px;
+
+        margin-bottom: 1px;
+    }
+
+    .withdraw {
+        font-size: 8px;
+    }
+
+
+    .game-action {
+        gap: 3px;
+    }
+
+    .download-btn {
+        min-height: 24px;
+
+        font-size: 9px;
+
+        padding: 3px 2px;
+
+        border-radius: 6px;
+    }
+
+
+    .game-meta {
+        font-size: 7px;
+
+        gap: 2px;
+    }
+
+    .game-meta .star {
+        font-size: 8px;
+    }
+}
+
+
+/* MENU */
+
+.menu-container {
+    position: fixed;
+
+    top: 12px;
+    left: 12px;
+
+    z-index: 9999;
+}
+
+.menu-btn {
+    width: 42px;
+    height: 42px;
+
+    border: 1px solid #39ff14;
 
     border-radius: 50%;
 
-    background: #ff0000;
+    background: #063b16;
+
+    color: white;
+
+    font-size: 28px;
+
+    line-height: 1;
+
+    cursor: pointer;
+}
+
+.menu-box {
+    display: none;
+
+    position: absolute;
+
+    top: 48px;
+    left: 0;
+
+    width: 170px;
+
+    padding: 8px;
+
+    background: #063b16;
+
+    border: 1px solid #39ff14;
+
+    border-radius: 12px;
 
     box-shadow:
-        0 0 5px #ff0000,
-        0 0 12px #ff0000,
-        0 0 22px #ff0000,
-        0 0 32px rgba(255,0,0,.8);
+        0 0 12px rgba(57,255,20,.35);
+}
 
-    pointer-events: none
+.menu-box a {
+    display: block;
+
+    padding: 12px 10px;
+
+    color: white;
+
+    text-decoration: none;
+
+    font-size: 15px;
+
+    border-radius: 8px;
+}
+
+.menu-box a:hover {
+    background: rgba(57,255,20,.15);
+}
+
+.menu-box.show {
+    display: block;
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- 3 DOT MENU -->
+
+<div class="menu-container">
+
+<button
+    id="menu-btn"
+    class="menu-btn"
+    type="button"
+>
+    ☰
+</button>
+
+
+<div
+    id="menu-box"
+    class="menu-box"
+>
+
+    <a
+        href="#"
+        target="_blank"
+    >
+        💬 WhatsApp
+    </a>
+
+    <a
+        href="https://t.me/vbVk9M2xLh"
+        target="_blank"
+    >
+        ✈️ Telegram
+    </a>
+
+</div>
+
+</div>
+
+
+<!-- HEADER -->
+
+<div class="header">
+
+<h1>
+    🎮 YONO GAMES
+</h1>
+
+<p class="tagline">
+    YOUR ONE-STOP DESTINATION TO DISCOVER TOP ONLINE GAMES, 
+    EXCITING OFFERS, RATINGS,TRUSTED AND 100% PAYMENT VERIFIED GAMING PLATFORMS.(YOUR MONEY IS ALWAYS SAFE). .
+</p>
+
+</div>
+
+<!-- SEARCH -->
+
+<div class="search-box">
+
+<input
+    type="text"
+    id="search"
+    placeholder="🔍 Search games..."
+    autocomplete="off"
+>
+
+</div>
+
+
+<!-- NEW LAUNCH -->
+
+<div
+    id="new-launch-section"
+    class="new-launch-section"
+    style="display:none;"
+>
+
+<div class="new-launch-title">
+    🎮 NEW LAUNCH
+</div>
+
+<div id="new-launch-card"></div>
+
+</div>
+
+
+<!-- YONO HEADING -->
+
+<div
+    id="yono-heading"
+    class="category-heading"
+>
+    DOWNLOAD NEW YONO GAMES
+</div>
+
+
+<!-- CATEGORY BUTTONS -->
+
+<div class="category-buttons">
+
+<button
+    id="yono-btn"
+    class="category-btn active"
+    type="button"
+>
+    🎮 YONO GAMES
+</button>
+
+
+<button
+    id="others-btn"
+    class="category-btn"
+    type="button"
+>
+    🎮 OTHERS GAMES
+</button>
+
+</div>
+
+
+<!-- ================================================= -->
+<!-- OTHERS ONLY                                      -->
+<!-- ================================================= -->
+
+<div id="others-extra">
+
+
+    <!-- OTHERS TITLE -->
+
+    <div class="others-title">
+        🎮 DAILY FREE BIG PROMO CODE AND BIG WINING
+    </div>
+
+
+    <!-- 2.35 : 1 PHOTO SLIDER -->
+
+    <div class="banner-section">
+
+        <div
+            id="banner-track"
+            class="banner-track"
+        >
+
+            <img
+                class="banner-slide"
+                src="https://i.ibb.co/Q760rRsk/1000010889.jpg"
+                alt="Banner 1"
+            >
+
+            <img
+                class="banner-slide"
+                src="https://i.ibb.co/QvjyFbQZ/1000010944.jpg"
+                alt="Banner 2"
+            >
+
+            <img
+                class="banner-slide"
+                src="https://i.ibb.co/R4gQ3BkT/1000010945.jpg"
+                alt="Banner 3"
+            >
+
+            <img
+                class="banner-slide"
+                src="https://i.ibb.co/KjB81sZj/1000010947.jpg"
+                alt="Banner 4"
+            >
+
+            <img
+                class="banner-slide"
+                src="https://i.ibb.co/wN7hs4kR/1000011045.jpg"
+                alt="Banner 5"
+            >
+
+        </div>
+
+    </div>
+
+
+    <!-- JOIN TELEGRAM -->
+
+    <div class="telegram-section">
+
+        <div class="telegram-title">
+            Join करें और नीचे दिए गए👇 सभी गेमों के लिए FREE PROMO CODE प्राप्त करें💸
+        </div>
+
+        <a
+            class="telegram-btn"
+            href="https://t.me/vbVk9M2xLh"
+            target="_blank"
+            rel="noopener noreferrer"
+        >
+            ✈️ JOIN TELEGRAM
+        </a>
+
+    </div>
+
+
+    <!-- DOWNLOAD NEW GAMES -->
+
+    <div class="others-download-title">
+        DOWNLOAD NEW GAMES
+    </div>
+
+</div>
+
+
+<!-- GAME LIST -->
+
+<div id="game-list">
+
+<div class="message">
+    WAIT A FEW MINUTES FOR YOUR GAMES
+</div>
+
+</div>
+
+
+<!-- SUPABASE -->
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<!-- JAVASCRIPT -->
+
+<script src="script.js"></script>
+
+
+</body>
+    </html>
