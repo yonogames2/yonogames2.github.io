@@ -897,9 +897,8 @@ body {
     display: block;
 }
     
-    /* ================================= */
-/* OTHERS BUTTON - RED LIGHT ANIMATION */
-/* ================================= */
+    
+/* OTHERS BUTTON - 2 RED LIGHTS AROUND BORDER */
 
 #others-btn {
     position: relative;
@@ -907,111 +906,52 @@ body {
     isolation: isolate;
 }
 
-
-/* Moving red light ring */
-
 #others-btn::after {
     content: "";
     position: absolute;
-
-    inset: -2px;
-
+    inset: -3px;
     border-radius: inherit;
-
-    padding: 3px;
-
-    background:
-        conic-gradient(
-            from 0deg,
-
-            transparent 0deg 25deg,
-
-            #ff1a1a 25deg 55deg,
-
-            transparent 55deg 180deg,
-
-            #ff1a1a 180deg 210deg,
-
-            transparent 210deg 360deg
-        );
-
-    -webkit-mask:
-        linear-gradient(#000 0 0) content-box,
-        linear-gradient(#000 0 0);
-
-    -webkit-mask-composite: xor;
-
-    mask-composite: exclude;
-
     pointer-events: none;
+    z-index: 10;
 
-    z-index: 5;
+    background: conic-gradient(
+        from 0deg,
+        transparent 0deg 20deg,
+        #ff0000 20deg 35deg,
+        transparent 35deg 180deg,
+        #ff0000 180deg 195deg,
+        transparent 195deg 360deg
+    );
 
-    animation:
-        othersRedSpin
-        3s linear infinite;
-
+    animation: othersBorderSpin 2.5s linear infinite;
 }
-
-
-/* Red glow */
 
 #others-btn::before {
     content: "";
-
     position: absolute;
-
-    inset: 0;
-
+    inset: 3px;
     border-radius: inherit;
-
-    box-shadow:
-        0 0 8px rgba(255, 0, 0, 0.7),
-        0 0 18px rgba(255, 0, 0, 0.45);
-
+    background: #063d2a;
     pointer-events: none;
-
-    z-index: 1;
-
+    z-index: 9;
 }
 
-
-/* Keep text above animation */
-
-#others-btn {
-    z-index: 1;
-}
-
-
-/* Animation */
-
-@keyframes othersRedSpin {
-
+@keyframes othersBorderSpin {
     from {
-        transform:
-            rotate(0deg);
+        transform: rotate(0deg);
     }
 
     to {
-        transform:
-            rotate(360deg);
+        transform: rotate(360deg);
     }
-
 }
 
-
-/* ================================= */
-/* HIDE RED LIGHT WHEN OTHERS ACTIVE */
-/* ================================= */
-
-#others-btn.active::after {
-    display: none;
-}
-
+#others-btn.active::after,
 #others-btn.active::before {
     display: none;
-    }
-
+}
+    
+    
 </style>
 
 </head>
